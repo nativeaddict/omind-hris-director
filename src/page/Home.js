@@ -18,7 +18,7 @@ export default class HomeScreen extends Component{
         return(            
             <View style={styles.container}>
                 {/* Navbar */}
-                <Text style={styles.textMenuActivity} onPress={()=>this.props.navigation.navigate('Activity')}>Activity</Text>
+                <Text style={styles.textMenuActivity} onPress={()=>this.props.navigation.navigate('Activity')}>News</Text>
                 <View style={styles.selectionMenuHome}>
                     <Text style={styles.textMenuHome}>Home</Text>
                 </View>
@@ -91,7 +91,7 @@ export default class HomeScreen extends Component{
                      
 
                 {/* News */}
-                <Text style={styles.textNewsHeading}>News for you</Text>
+                <Text style={styles.textNewsHeading}>Meeting</Text>
                 <Text style={styles.textNewsSeeMore} onPress={()=>this.props.navigation.navigate('News')}>See More</Text>
                 {/* News Column 1 */}
                 <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('News')}>
@@ -148,14 +148,15 @@ const styles = StyleSheet.create({
     },
     textMenuActivity: {
         position: 'absolute',
-        left: 55,
+        left: 75,
         top: 22,       
         fontFamily: 'Poppins-Bold',
         fontSize: 14,
         lineHeight: 21,
         color: 'rgba(38, 39, 52, 0.4)'
     },
-    textMenuHome: {        
+    textMenuHome: {   
+        bottom: 1.5,
         textAlign: 'center',
         color: '#fff',
         fontFamily: 'Poppins-Bold',
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     },
     textMenuNotification: {
         position: 'absolute',
-        left: 245,
+        left: 240,
         top: 22,      
         fontFamily: 'Poppins-Bold',
         fontSize: 14,
@@ -173,12 +174,11 @@ const styles = StyleSheet.create({
         color: 'rgba(38, 39, 52, 0.4)'
     },
     selectionMenuHome:{
-        justifyContent: 'center',
         position: 'absolute',
         width: 56,
         height: 16,
         left: 152,
-        top: 25,
+        top: 24,
         backgroundColor: '#099f84',
         borderRadius: 50,
     },
