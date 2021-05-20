@@ -15,6 +15,12 @@ import DetailEmployeeScreen from './DetailEmployee';
 import ProjectStatusScreen from './ProjectStatus';
 import FAQScreen from './FAQ';
 import RulesScreen from './Rules';
+import DetailProjectScreen from './DetailProject';
+import PendingScreen from './Pending';
+import OngoingScreen from './Ongoing';
+import ReviewScreen from './Review';
+import CompleteScreen from './Complete';
+import NewsContent1Screen from './NewsContent1';
 
 const MainNavigator = createStackNavigator({
     // Every screen in this apps 
@@ -29,7 +35,14 @@ const MainNavigator = createStackNavigator({
     DetailEmployee: {screen: DetailEmployeeScreen},
     ProjectStatus: {screen: ProjectStatusScreen},
     FAQ: {screen: FAQScreen},
-    Rules: {screen: RulesScreen}
+    Rules: {screen: RulesScreen},
+    DetailProject: {screen: DetailProjectScreen},
+    Pending: {screen: PendingScreen},
+    Ongoing: {screen: OngoingScreen},
+    Review: {screen: ReviewScreen},
+    Complete: {screen: CompleteScreen},
+    NewsContent1: {screen: NewsContent1Screen},
+
 }, {
     headerMode: 'none',
     navigationOptions: {

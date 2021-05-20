@@ -54,7 +54,7 @@ export default class EmployeeSummaryScreen extends Component{
                         },
                         {
                             id: 'EMP3',
-                            photo: require('../assets/images/Photo_Barud.png'),
+                            photo: require('../assets/images/Photo_Barid.png'),
                             name: 'Ignatius Barud Tampubolon',
                             division: 'Production',
                             role: 'Junior Frontend Developer',

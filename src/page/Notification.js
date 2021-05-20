@@ -4,6 +4,7 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import { Container, Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
 
 export default class NotificationScreen extends Component{
     render(){
