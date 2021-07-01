@@ -8,120 +8,162 @@ import {
     StyleSheet,
     } 
 from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import SkeletonHome from '../components/SkeletonHome';
 
 export default class HomeScreen extends Component{
     constructor(props) {
         super(props);
+        this.state = {
+            users: [],
+            isLoading: false,
+            timePassed: false,
+            error: null 
+        }
+    }
+    componentDidMount(){
+        this.getUser();
+    }
+    getUser = async () => {
+        this.setState({isLoading: true})
+        let token = await AsyncStorage.getItem('token');
+        axios.get('http://6daa09deffa7.ngrok.io/api/profile-ceo', {
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(async(res)=>{
+            res = res.data;
+            console.log(res);
+            this.setState({
+                users: res.data,
+                isLoading: false
+            });
+        })
+        .catch(error => 
+            this.setState({
+                error,
+                isLoading: false
+        }))
     }
     render(){ 
-        return(            
-            <View style={styles.container}>
-                {/* Navbar */}
-                <Text style={styles.textMenuNews} onPress={()=>this.props.navigation.navigate('News')}>News</Text>
-                <View style={styles.selectionMenuHome}>
-                    <Text style={styles.textMenuHome}>Home</Text>
-                </View>
-                <Text style={styles.textMenuNotification} onPress={()=>this.props.navigation.navigate('Notification')}>Notification</Text>
-                {/* Name */}   
-                <Text style={styles.textNameHeading} 
-                onPress={()=>this.props.navigation.navigate('Profile')} >Hello, Barid Rais!</Text>
-                {/* Profile Picture */}
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Profile')}>
-                    <Image style={styles.iconProfilePicture}
-                    source={require('../assets/images/I_ProfilePicture_Barud.png')} 
+        if(this.state.isLoading){
+            return<SkeletonHome/>
+        }
+        else{
+            return(            
+                <View style={styles.container}>
+                    {/* Navbar */}
+                    <Text style={styles.textMenuNews} onPress={()=>this.props.navigation.navigate('News')}>News</Text>
+                    <View style={styles.selectionMenuHome}>
+                        <Text style={styles.textMenuHome}>Home</Text>
+                    </View>
+                    <Text style={styles.textMenuNotification} onPress={()=>this.props.navigation.navigate('Notification')}>Notification</Text>
+                    {/* Name */}   
+                    <Text style={styles.textNameHeading} 
+                    onPress={()=>this.props.navigation.navigate('Profile')} >Hello, {this.state.users.nama}!</Text>
+                    {/* Profile Picture */}
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Profile')}>
+                        <Image 
+                            style={styles.iconProfilePicture}
+                            source={{uri: this.state.users.foto}} 
+                        />
+                    </TouchableWithoutFeedback>    
+                    {/* Emp. summary */}
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('EmployeeSummary')}>
+                        <View style={styles.rectangleEmployeeSummary}>
+                            <Image 
+                                style={{top: 10, left: 10, width: 65, height: 80}}
+                                source={require('../assets/images/Icon_EmployeeSummary.png')}
+                            />
+                            <Text style={{bottom: 45, left: 80, fontFamily: 'Poppins-Bold', fontSize: 12}}>Employee{'\n'}Summary</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    {/* Project Status */}
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('ProjectStatus')}>
+                        <View style={styles.rectangleProjectStatus}>
+                            <Image
+                                style={{top: 10, left: 10, width: 65, height: 80}}
+                                source={require('../assets/images/Icon_ProjectStatus.png')}
+                            />
+                            <Text style={{bottom: 45, left: 80, fontFamily: 'Poppins-Bold', fontSize: 12}}>Project{'\n'}Status</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    {/* Meeting */}
+                    <Text style={styles.textMeetingHeading}>Meeting</Text>
+                    <FlatList
+                        style={{left: 25, top: 269, maxHeight: 112}}
+                        contentContainerStyle={{paddingRight: 40}}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        data={[
+                            {
+                                id: 'Review',                             
+                                name: 'Sprint Review',
+                                description: 'Weekly Review',                            
+                                timestamp: '3:40 PM Friday, February 20, 2021'                        
+                            },
+                            {
+                                id: 'Retrospective',                             
+                                name: 'Sprint Retrospective',
+                                description: 'Weekly Retrospective',
+                                timestamp: '4:40 PM Friday, February 20, 2021'
+                            },
+                        ]}                    
+                        renderItem={({item}) =>  
+                        <View style={[styles.rectangleMeetingCard]}>      
+                            <Image 
+                                style={{right: 6, width: 106, height: 100, opacity: 1}}
+                                source={require('../assets/images/V_Meeting.png')}
+                            />               
+                            <Text style={{left: 110, bottom: 90, fontFamily: 'Poppins-Bold', fontSize: 16, color: '#262734'}}>
+                                {item.name}
+                            </Text>
+                            <Text style={{left: 110, bottom: 90, fontFamily: 'Poppins-Medium', fontSize: 14}}>
+                                {item.description}
+                            </Text>                               
+                            <Text style={{left: 110, bottom: 80, fontFamily: 'Poppins-Light', fontSize: 10}}>
+                                {item.timestamp}
+                            </Text>
+                        </View>
+                        }   
                     />
-                </TouchableWithoutFeedback>    
-                {/* Emp. summary */}
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('EmployeeSummary')}>
-                    <View style={styles.rectangleEmployeeSummary}>
-                        <Image 
-                            style={{top: 10, left: 10, width: 65, height: 80}}
-                            source={require('../assets/images/Icon_EmployeeSummary.png')}
-                        />
-                        <Text style={{bottom: 45, left: 80, fontFamily: 'Poppins-Bold', fontSize: 12}}>Employee{'\n'}Summary</Text>
-                    </View>
-                </TouchableWithoutFeedback>
-                {/* Project Status */}
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('ProjectStatus')}>
-                    <View style={styles.rectangleProjectStatus}>
-                        <Image
-                            style={{top: 10, left: 10, width: 65, height: 80}}
-                            source={require('../assets/images/Icon_ProjectStatus.png')}
-                        />
-                        <Text style={{bottom: 45, left: 80, fontFamily: 'Poppins-Bold', fontSize: 12}}>Project{'\n'}Status</Text>
-                    </View>
-                </TouchableWithoutFeedback>
-                {/* Meeting */}
-                <Text style={styles.textMeetingHeading}>Meeting</Text>
-                <FlatList
-                    style={{left: 25, top: 269, maxHeight: 112}}
-                    contentContainerStyle={{paddingRight: 40}}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={[
-                        {
-                            id: 'Review',                             
-                            name: 'Sprint Review',
-                            description: 'Weekly Review',                            
-                            timestamp: '3:40 PM Friday, February 20, 2021'                        
-                        },
-                        {
-                            id: 'Retrospective',                             
-                            name: 'Sprint Retrospective',
-                            description: 'Weekly Retrospective',
-                            timestamp: '4:40 PM Friday, February 20, 2021'
-                        },
-                    ]}                    
-                    renderItem={({item}) =>  
-                    <View style={[styles.rectangleMeetingCard]}>      
-                        <Image 
-                            style={{right: 6, width: 106, height: 100, opacity: 1}}
-                            source={require('../assets/images/V_Meeting.png')}
-                        />               
-                        <Text style={{left: 110, bottom: 90, fontFamily: 'Poppins-Bold', fontSize: 16, color: '#262734'}}>
-                            {item.name}
-                        </Text>
-                        <Text style={{left: 110, bottom: 90, fontFamily: 'Poppins-Medium', fontSize: 14}}>
-                            {item.description}
-                        </Text>                               
-                        <Text style={{left: 110, bottom: 80, fontFamily: 'Poppins-Light', fontSize: 10}}>
-                            {item.timestamp}
-                        </Text>
-                    </View>
-                    }   
-                />
-                {/* Guideline */}
-                <Text style={styles.textGuidelineHeading}>Guideline</Text>   
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('FAQ')}>
-                    <View style={styles.rectangleFAQ}>                                            
-                        <View style={styles.ellipseOrnamentSmall}/>  
-                        <Image 
-                            style={{position: 'absolute', margin: -10, width: 85, height: 85}}                        
-                            source={require('../assets/images/Icon_FAQ.png')}/> 
-                        <Text 
-                            style={{left: 90, fontFamily: 'Poppins-Bold', fontSize: 14, lineHeight: 21, color: '#262734'}}
-                           >
-                                Frequently Asked Questions
-                        </Text>                                                
-                    </View>   
-                </TouchableWithoutFeedback>                 
-
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Rules')}>
-                    <View style={styles.rectangleRules}>
-                        <View style={styles.ellipseOrnamentSmall}/>
-                        <Image 
-                            style={{position: 'absolute', top: -7, left: -15, width: 85, height: 85}}                        
-                            source={require('../assets/images/Icon_Rules.png')}/>    
-                        <Text 
-                            style={{left: 90, fontFamily: 'Poppins-Bold', fontSize: 14, lineHeight: 21, color: '#262734'}}
+                    {/* Guideline */}
+                    <Text style={styles.textGuidelineHeading}>Guideline</Text>   
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('FAQ')}>
+                        <View style={styles.rectangleFAQ}>                                            
+                            <View style={styles.ellipseOrnamentSmall}/>  
+                            <Image 
+                                style={{position: 'absolute', margin: -10, width: 85, height: 85}}                        
+                                source={require('../assets/images/Icon_FAQ.png')}/> 
+                            <Text 
+                                style={{left: 90, fontFamily: 'Poppins-Bold', fontSize: 14, lineHeight: 21, color: '#262734'}}
                             >
-                                Omindtech Rules
-                        </Text>
-                    </View>
-                </TouchableWithoutFeedback>                             
-                
-            </View> 
-        );
+                                    Frequently Asked Questions
+                            </Text>                                                
+                        </View>   
+                    </TouchableWithoutFeedback>                 
+
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Rules')}>
+                        <View style={styles.rectangleRules}>
+                            <View style={styles.ellipseOrnamentSmall}/>
+                            <Image 
+                                style={{position: 'absolute', top: -7, left: -15, width: 85, height: 85}}                        
+                                source={require('../assets/images/Icon_Rules.png')}/>    
+                            <Text 
+                                style={{left: 90, fontFamily: 'Poppins-Bold', fontSize: 14, lineHeight: 21, color: '#262734'}}
+                                >
+                                    Omindtech Rules
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>                             
+                    
+                </View> 
+            );
+        }
     }
 }
 const styles = StyleSheet.create({
@@ -179,7 +221,8 @@ const styles = StyleSheet.create({
         height: 25,
         left: 310,
         top: 81,
-        borderRadius: 5
+        borderRadius: 5,
+        backgroundColor: '#099f84' 
     },
     rectangleEmployeeSummary:{
         position: 'absolute',

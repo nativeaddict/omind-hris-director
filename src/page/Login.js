@@ -4,15 +4,14 @@ import {
     Text,
     StyleSheet,
     TextInput,
-    Button,
     Image,
-    Touchable,
     TouchableOpacity,
     Alert
 } from 'react-native';
 import axios from 'axios';
 // import gambar ke objek
 import bgimages from '../assets/images/V_Login.png';
+import deviceStorage from '../services/DeviceStorage';
 
 export default class LoginScreen extends Component{
     state={
@@ -48,18 +47,19 @@ export default class LoginScreen extends Component{
             this.setState({isSubmitting: false})
         }
         else {
-            axios.post('http://244c38aa0f2e.ngrok.io/api/login',
+            axios.post('http://6daa09deffa7.ngrok.io/api/login-ceo',
             {
                 email: this.state.email,
                 password: this.state.password,
             },
             ).then(res=>{
+                deviceStorage.saveItem("token", res.data.token)
                 this.props.navigation.navigate('Home')
                 this.setState({isSubmitting: false})
                 console.log(res);
             }, err=>{
                 this.setState({isSubmitting: false})
-                let e=err.response.data;
+                let e = err.response.data;
                 let err_msg='';
                 if(e.errors){
                     Object.entries(e.errors).forEach(
@@ -93,12 +93,12 @@ export default class LoginScreen extends Component{
             <View style={styles.container}>
                 <Image style={styles.bgimagesStyle} source={bgimages} />
                 <Text style={styles.title}>HRIS</Text>
-                <Text style={styles.subtitle}>For Employee</Text>
+                <Text style={styles.subtitle}>For Director</Text>
                 <View style={styles.boxinput}>
                     <Text style={styles.textTitle} >Email</Text>
                     <View style={styles.inputEmail}>
                         <TextInput style={styles.inputText}
-                        placeholder="daru@omindtech.com"
+                        placeholder="email@omindtech.com"
                         placeholderTextColor="#fff"
                         selectionColor="#fff"
                         keyboardType="email-address"
@@ -111,13 +111,14 @@ export default class LoginScreen extends Component{
                         <TextInput style={styles.inputText}
                         placeholder="Password"
                         placeholderTextColor="#fff" 
+                        secureTextEntry={true}
                         onChangeText={(val)=>{this.setState({password: val})}}
                         value={this.state.password}
                         ref={(input) => this.password = input}
                         />
                     </View>
                     <TouchableOpacity style={styles.buttonLogin} onPress={this.submit} disabled={this.state.isSubmitting} >
-                        <Text style={styles.textButton} > {this.state.isSubmitting?'signing in':'Signin'}</Text>
+                        <Text style={styles.textButton} > {this.state.isSubmitting?'Signing In':'Sign In'}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

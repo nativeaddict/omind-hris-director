@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import {View, 
-        Image, 
-        Text, 
-        TouchableOpacity, 
-        StyleSheet} from 'react-native';
+import {
+    View, 
+    Image, 
+    Text, 
+    TouchableOpacity, 
+    StyleSheet
+} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default class ProfileScreen extends Component{
     render(){
@@ -30,7 +33,10 @@ export default class ProfileScreen extends Component{
                 <Text style={styles.ProfileName}>Barid Rais</Text>
                 
                 {/* ProfileRole */}
-                <Text style={styles.ProfileRole}>Chief Executive Officer</Text>
+                <Text style={styles.ProfileRole} onPress={()=>{
+                    AsyncStorage.removeItem('token');
+                    this.props.navigation.replace('Login')
+                }}>Chief Executive Officer</Text>
                 </View>
 
                 {/* RectangleContent */}

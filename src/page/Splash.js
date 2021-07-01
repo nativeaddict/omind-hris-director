@@ -5,25 +5,42 @@ import {
     StyleSheet
 } from 'react-native';
 // Install this library
+import AsyncStorage from '@react-native-community/async-storage';
 import LottieView from 'lottie-react-native';
 
 export default class SplashScreen extends Component{
     constructor(props){
         super();
     }
+
     render(){
         return(
             <View style={styles.container}>
-            <Text style={styles.heading1Text}>HRIS For Employee</Text>
+            <Text style={styles.heading1Text}>HRIS For Director</Text>
             <Text style={styles.heading2Text}>PT Omind Muda Berkarya Indonesia</Text>
             <LottieView 
                 style={{width: '50%', alignSelf: 'center'}}
                 source={require('../assets/splash.json')} 
                 autoPlay 
                 loop={false}
-                speed={0.5}
-                onAnimationFinish = {()=>{  
-                this.props.navigation.replace('Onboarding');
+                speed={1}
+                onAnimationFinish = {()=>{ 
+                    AsyncStorage.getItem('launchCount').then(value => {
+                        if(parseInt(value) < 1){
+                            AsyncStorage.setItem('launchCount', ''+(parseInt(value) + 1))
+                            this.props.navigation.replace('Onboarding');
+                        }
+                        else{
+                            AsyncStorage.getItem('token').then(value => {
+                                if(value){
+                                    this.props.navigation.replace('Home');
+                                }
+                                else{
+                                    this.props.navigation.replace('Login');
+                                }
+                            });
+                        }
+                    });
             }}
             />
             </View>

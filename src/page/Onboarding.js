@@ -36,8 +36,8 @@ export default class OnboardingScreen extends Component{
             DoneButtonComponent={Done}
 
             // Soon -> Change navigation to replace,
-            onSkip={()=>this.props.navigation.navigate('Home')}
-            onDone={()=>this.props.navigation.navigate('Home')}
+            onSkip={()=>this.props.navigation.navigate('Login')}
+            onDone={()=>this.props.navigation.navigate('Login')}
             pages={[
                 {
                     backgroundColor:'#099F84',

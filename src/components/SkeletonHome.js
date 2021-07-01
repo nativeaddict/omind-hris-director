@@ -6,26 +6,33 @@ import {
 } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-export default class NotificationScreen extends Component{
+export default class SkeletonHome extends Component{
     
     render(){
         return(            
             <View style={styles.container}>
-                {/* <SkeletonPlaceholder>
+                <SkeletonPlaceholder>
                     <View style={{flexDirection: 'column'}}>
-                        <View style={{marginTop: 55, width: 75, height: 75, borderRadius: 75, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 15, width: 210, height: 30, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 15, width: 210, height: 20, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 5, width: 210, height: 20, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 5, width: 210, height: 20, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 5, width: 210, height: 20, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 5, width: 210, height: 20, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 5, width: 210, height: 20, borderRadius: 5, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 15, width: 270, height: 30, borderRadius: 10, alignSelf: 'center'}}/>
-                        <View style={{marginTop: 20, width: 110, height: 25, borderRadius: 5, left: 25}}/>
-                        <View style={{marginTop: 5, width: 310, height: 40, borderRadius: 10, left: 25}}/>
+                        <View style={{flexDirection: 'row', marginTop: 80}}>
+                            <View style={{left: 25, width: 215, height: 25, borderRadius: 5}}/>
+                            <View style={{left: 95, width: 25, height: 25, borderRadius: 5}}/>
+                        </View>   
+                        <View style={{flexDirection: 'row', marginTop: 15}}>
+                            <View style={{left: 25, width: 150, height: 100, borderRadius: 10}}/>
+                            <View style={{left: 35, width: 150, height: 100, borderRadius: 10}}/>
+                        </View> 
+                        <View style={{marginTop: 20, left: 25, width: 100, height: 25, borderRadius: 5}}/>
+                        <View style={{flexDirection: 'row', marginTop: 5}}>
+                            <View style={{left: 25, width: 100, height: 100, borderBottomEndRadius: 50, borderTopEndRadius: 50, borderTopStartRadius: 10, borderBottomStartRadius: 10}}/>    
+                            <View style={{left: 35, width: 200, height: 100, borderRadius: 10}}/>    
+                        </View>   
+                        <View style={{marginTop: 20, left: 25, width: 100, height: 25, borderRadius: 5}}/>
+                        <View style={{flexDirection: 'column', marginTop: 5}}>
+                            <View style={{left: 25, width: 310, height: 70, borderRadius: 10}}/>    
+                            <View style={{marginTop: 10, left: 25, width: 310, height: 70, borderRadius: 10}}/>    
+                        </View> 
                     </View>
-                </SkeletonPlaceholder>  */}
+                </SkeletonPlaceholder> 
                 <Text style={styles.textMenuNews} onPress={()=>this.props.navigation.navigate('News')}>News</Text>
                 <View style={styles.selectionMenuHome}>
                     <Text style={styles.textMenuHome}>Home</Text>
@@ -38,7 +45,7 @@ export default class NotificationScreen extends Component{
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#f9f9fb',
+        backgroundColor: '#fff',
     },
     textMenuNews: {
         position: 'absolute',
