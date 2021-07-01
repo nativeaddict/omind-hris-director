@@ -27,10 +27,10 @@ export default class ProfileScreen extends Component{
                     {/* PhotoProfile */}
                     <View style={styles.PhotoProf}>
                         <Image style={{width: 70, height: 70}}
-                                source={require('../assets/images/Photo_Barid.png')} />
+                                source={require('../assets/images/V_FAQ.png')} />
                     </View>
                 {/* ProfileName */}
-                <Text style={styles.ProfileName}>Barid Rais</Text>
+                <Text style={styles.ProfileName}>Hazmi Putra Petir</Text>
                 
                 {/* ProfileRole */}
                 <Text style={styles.ProfileRole} onPress={()=>{
@@ -43,31 +43,31 @@ export default class ProfileScreen extends Component{
                 <View style={styles.RectangleContent}>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6 }}>
                          <Text style={styles.TextLeft}>Name</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 90}]}>Barid Rais</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 45}]}> Hazmi Putra Petir </Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Email</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 18}]}>barid@omindtech.id</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 18}]}>hazmi@omindtech.id</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Phone</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 42}]}>08223344556677</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 45}]}>08223344556677</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Date of Birth</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 51}]}>01 January 2021</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 53}]}>01 January 2021</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Address</Text>
                          <Text style={[styles.TextRight,{paddingRight: 33}]}>Jakarta 99, Jaksel</Text>
                     </View>
-                    <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
-                         <Text style={styles.TextLeft}>Hobby</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 99}]}>Football</Text>
-                    </View>
                 </View>
 
-                
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')}>
+                <View style={{top: 450, left: 96, width: 169, height: 26, borderRadius: 5, backgroundColor: '#099f84', position: 'absolute',alignItems: 'center'}}>
+                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, alignItems: 'center', textAlign: 'center', color: '#FFF'}}>Sign Out</Text>
+                </View>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -130,11 +130,11 @@ const styles=StyleSheet.create({
     RectangleContent:{
         backgroundColor: '#FFF', 
         width: 310, 
-        height: 241, 
+        height: 199, 
         left: 25, 
         top: 216, 
         position: 'absolute', 
-        elevation: 3
+        elevation: 0.7
     },
     TextLeft:{
         top: 8, 

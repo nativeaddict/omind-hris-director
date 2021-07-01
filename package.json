@@ -24,8 +24,12 @@
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.1.1",
+<<<<<<< Updated upstream
     "react-native-skeleton-placeholder": "^4.0.0",
     "react-native-table-component": "^1.2.1",
+=======
+    "react-native-tab-view": "^3.0.1",
+>>>>>>> Stashed changes
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4"
   },

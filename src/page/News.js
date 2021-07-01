@@ -12,17 +12,14 @@ export default class NewsScreen extends Component{
     render(){
         return(
             <View style={styles.container}>
+                <View >
                 {/* Navbar */}
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Home')}>
-                    <View style={styles.rectangleBack}>
-                        <Image
-                            style={{width: 17, height: 17, position: 'absolute'}}
-                            source={require('../assets/images/arrow-back.png')}
-                        />                    
+                    <View style={styles.selectionMenuActivity}>
+                        <Text style={styles.textMenuActivity}>News</Text>
                     </View>
-                </TouchableWithoutFeedback>               
-                {/* Title Text */}
-                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>News</Text>
+                    <Text style={styles.textMenuHome} onPress={()=>this.props.navigation.navigate('Home')}>Home</Text>
+                    <Text style={styles.textMenuNotification} onPress={()=>this.props.navigation.navigate('Notifications')}>Notification</Text>
+                </View>
 
                 <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, left: 25, top: 71}}>Up to date for you!</Text>
 
@@ -136,7 +133,7 @@ const styles = StyleSheet.create({
         margin: 5,
         width: 310,
         height: 100,
-        elevation: 3,
+        elevation: 0.7,
         borderRadius: 10,
         resizeMode: 'center'
     },
@@ -147,7 +144,7 @@ const styles = StyleSheet.create({
         left: 25, 
         top: 10, 
         marginBottom: 10, 
-        elevation: 3, 
+        elevation: 0.7, 
         borderRadius: 10
     },
     newsPhoto:{
@@ -189,5 +186,40 @@ const styles = StyleSheet.create({
         height: 11, 
         left: 285, 
         top: -122 
+    },
+    textMenuActivity:{      
+        fontFamily: 'Poppins-Bold',
+        fontSize: 14,
+        lineHeight: 21,
+        color: '#f9f9fb',
+        textAlign: 'center',
+    },
+    textMenuHome:{
+        position: 'absolute',
+        left: 158,
+        top : 22,
+        color: 'rgba(38, 39, 52, 0.4)',
+        fontFamily: 'Poppins-Bold',
+        fontSize: 14,
+        lineHeight: 21
+    },
+    textMenuNotification:{
+        position: 'absolute',
+        left: 245,
+        top: 22,      
+        fontFamily: 'Poppins-Bold',
+        fontSize: 14,
+        lineHeight: 21,
+        color: 'rgba(38, 39, 52, 0.4)'
+    },
+    selectionMenuActivity:{
+        justifyContent: 'center',
+        position: 'absolute',
+        width: 70,
+        height: 16,
+        left: 49,
+        top: 25,
+        backgroundColor: '#099f84',
+        borderRadius: 50,
     },
 })
