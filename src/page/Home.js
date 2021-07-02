@@ -28,14 +28,14 @@ export default class HomeScreen extends Component{
     getUser = async () => {
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://6daa09deffa7.ngrok.io/api/profile-ceo', {
+        axios.get('http://42bbbe79c5e3.ngrok.io/api/profile-ceo', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(async(res)=>{
+        .then(res=>{
             res = res.data;
             console.log(res);
             this.setState({
@@ -49,6 +49,9 @@ export default class HomeScreen extends Component{
                 isLoading: false
         }))
     }
+    // getMeeting = async()=> {
+
+    // }
     render(){ 
         if(this.state.isLoading){
             return<SkeletonHome/>

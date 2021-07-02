@@ -7,8 +7,43 @@ import {
     StyleSheet
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios';
 
 export default class ProfileScreen extends Component{
+    constructor(props){
+        super(props);
+        this.state = { 
+            users: [],
+            isLoading: false,
+        };
+    };
+    componentDidMount(){
+        this.getUser();
+    }
+    getUser = async () => {
+        this.setState({isLoading: true})
+        let token = await AsyncStorage.getItem('token');
+        axios.get('http://42bbbe79c5e3.ngrok.io/api/profile-ceo', {
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(async(res)=>{
+            res = res.data;
+            console.log(res);
+            this.setState({
+                users: res.data,
+                isLoading: false
+            });
+        })
+        .catch(error => 
+            this.setState({
+                error,
+                isLoading: false
+        }))
+    }
     render(){
         return(
             <View style={styles.container}>
@@ -26,47 +61,50 @@ export default class ProfileScreen extends Component{
                 <View style={styles.BioRectangle}>
                     {/* PhotoProfile */}
                     <View style={styles.PhotoProf}>
-                        <Image style={{width: 70, height: 70}}
-                                source={require('../assets/images/V_FAQ.png')} />
+                        <Image 
+                            style={{width: 70, height: 70}}
+                            source={{urii: this.state.users.foto}} 
+                        />
                     </View>
                 {/* ProfileName */}
-                <Text style={styles.ProfileName}>Hazmi Putra Petir</Text>
+                <Text style={styles.ProfileName}>{this.state.users.nama}</Text>
                 
                 {/* ProfileRole */}
-                <Text style={styles.ProfileRole} onPress={()=>{
-                    AsyncStorage.removeItem('token');
-                    this.props.navigation.replace('Login')
-                }}>Chief Executive Officer</Text>
+                <Text style={styles.ProfileRole}>{this.state.users.divisi?.posisi}</Text>
                 </View>
 
                 {/* RectangleContent */}
                 <View style={styles.RectangleContent}>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6 }}>
                          <Text style={styles.TextLeft}>Name</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 45}]}> Hazmi Putra Petir </Text>
+                         <Text style={[styles.TextRight,{paddingRight: 45}]}>{this.state.users.nama}</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Email</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 18}]}>hazmi@omindtech.id</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 18}]}>{this.state.users.email}</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Phone</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 45}]}>08223344556677</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 45}]}>{this.state.users.no_hp}</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Date of Birth</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 53}]}>01 January 2021</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 53}]}>{this.state.users.tgl_lahir}</Text>
                     </View>
                     <View style={{width: 310, height: 30, backgroundColor: '#FFF', marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#262734',borderBottomWidth: 0.6}}>
                          <Text style={styles.TextLeft}>Address</Text>
-                         <Text style={[styles.TextRight,{paddingRight: 33}]}>Jakarta 99, Jaksel</Text>
+                         <Text style={[styles.TextRight,{paddingRight: 33}]}>{this.state.users.alamat}</Text>
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')}>
-                <View style={{top: 450, left: 96, width: 169, height: 26, borderRadius: 5, backgroundColor: '#099f84', position: 'absolute',alignItems: 'center'}}>
+                <TouchableOpacity
+                    style={{top: 450, left: 96, width: 169, height: 26, borderRadius: 5, backgroundColor: '#099f84', position: 'absolute',alignItems: 'center'}}
+                    onPress={()=>{
+                        AsyncStorage.removeItem('token')
+                        this.props.navigation.replace('Login')
+                    }}
+                >
                     <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, alignItems: 'center', textAlign: 'center', color: '#FFF'}}>Sign Out</Text>
-                </View>
                 </TouchableOpacity>
             </View>
         );
@@ -134,7 +172,8 @@ const styles=StyleSheet.create({
         left: 25, 
         top: 216, 
         position: 'absolute', 
-        elevation: 0.7
+        elevation: 0.7,
+        borderRadius: 10
     },
     TextLeft:{
         top: 8, 

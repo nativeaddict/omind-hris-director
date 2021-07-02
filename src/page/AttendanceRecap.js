@@ -27,7 +27,7 @@ export default class AttendanceRecapScreen extends Component{
         let id = this.props.navigation.state.params.id;
         console.log('id', id);
         let token = await AsyncStorage.getItem('token');
-        axios.get(`http://6daa09deffa7.ngrok.io/api/attendance-recap/${id}`, {
+        axios.get(`http://42bbbe79c5e3.ngrok.io/api/attendance-recap/${id}`, {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

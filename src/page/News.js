@@ -7,100 +7,94 @@ import {
     Image,
     FlatList,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import SkeletonNews from '../components/SkeletonNews';
 
 export default class NewsScreen extends Component{
+    constructor(props){
+        super(props);
+        this.state = { 
+            news: [],
+            isLoading: false,
+        };
+    }
+    componentDidMount(){
+        this.getNews();
+    }
+    getNews = async()=> {
+        this.setState({isLoading: true})
+        let token = await AsyncStorage.getItem('token');
+        axios.get('http://42bbbe79c5e3.ngrok.io/api/get-news', {
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            res = res.data;
+            let temp_data = [];
+            temp_data = res.data.map(v=>{
+                return{
+                    id: v.id,
+                    photo: v.ava_berita,
+                    title: v.judul_berita,
+                    content: v.isi_berita,
+                    date: v.tgl_post
+                }
+            });
+            console.log(temp_data);
+            this.setState({
+                news: temp_data.reverse(),
+                isLoading: false,
+            })
+        })
+        .catch(error => {
+            console.log(error.response.data);
+            this.setState({
+                error,
+                isLoading: false
+            })
+        });
+    }
     render(){
-        return(
-            <View style={styles.container}>
-                <View >
-                {/* Navbar */}
-                    <View style={styles.selectionMenuActivity}>
-                        <Text style={styles.textMenuActivity}>News</Text>
+        if(this.state.isLoading){
+            return<SkeletonNews/>
+        }
+        else{
+            return(
+                <View style={styles.container}>
+                    {/* Navbar */}
+                    <View style={styles.selectionMenuNews}>
+                        <Text style={styles.textMenuNews}>News</Text>
                     </View>
                     <Text style={styles.textMenuHome} onPress={()=>this.props.navigation.navigate('Home')}>Home</Text>
-                    <Text style={styles.textMenuNotification} onPress={()=>this.props.navigation.navigate('Notifications')}>Notification</Text>
+                    <Text style={styles.textMenuNotification} onPress={()=>this.props.navigation.navigate('Notification')}>Notification</Text>
+                    {/* News Flatlist */}
+                    <Text style={{position: 'absolute', fontFamily:'Poppins-Bold', fontSize: 16, left: 25, top: 71}}>Up to date for you!</Text>
+                    <FlatList
+                    style={{left: 25, top: 71}}
+                    contentContainerStyle={{paddingBottom: 100}}
+                    data={this.state.news}
+                    renderItem={({item}) =>
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('NewsContent1', item)}>
+                        <View style={styles.rectangleContent}>
+                            <Image                         
+                                style={{position: 'absolute', width: 90, height: 100, borderTopLeftRadius: 10, borderTopRightRadius: 50, borderBottomLeftRadius: 10, borderBottomRightRadius: 50}} 
+                                source={{uri: item.photo}} 
+                            />   
+                            <View style={{width: 90, height: 100, borderBottomEndRadius: 50, borderTopEndRadius: 50, borderTopStartRadius: 10, borderBottomStartRadius: 10, backgroundColor: 'rgba(9, 159, 132, 0.5)'}}/>
+                            <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 99, top: -85, marginBottom: 2}}> {item.title} </Text>
+                            <Text style={{maxHeight: 15, maxWidth: 150, fontSize: 10, fontFamily: 'Poppins-Medium', left: 102, top: -85, marginBottom: 16}}>{item.content}</Text>
+                            <Text style={{fontSize: 10, fontFamily: 'Poppins-Light', left: 99, top: -90, }}> {item.date} </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    }
+                />
                 </View>
-
-                <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, left: 25, top: 71}}>Up to date for you!</Text>
-
-                {/* News Flatlist */}
-                <FlatList
-                style={{left: 25, top: 71}}
-                contentContainerStyle={{paddingBottom: 100,}}
-                data={[
-                    {
-                        id: 'NewsContent1',
-                        newsPhoto: require('../assets/images/NewsPhoto1.png'),
-                        newsTitle: 'Emergency Covid19',
-                        newsContent: 'Lorem Ipsum ...',
-                        newsdate: 'Februari 01, 2021 06:30 WIB',
-                        newsDetails: 'Details',
-                        detailsIcon: require('../assets/images/arrow-next.png'),
-                    },
-                    {
-                        id: 'NewsContent2',
-                        newsPhoto: require('../assets/images/Test-BannerImageNews.png'),
-                        newsTitle: 'Emergency Covid19',
-                        newsContent: 'Lorem Ipsum ...',
-                        newsdate: 'Februari 01, 2021 06:30 WIB',
-                        newsDetails: 'Details',
-                        detailsIcon: require('../assets/images/arrow-next.png'),
-                    },
-                    {
-                        id: 'NewsContent3',
-                        newsPhoto: require('../assets/images/NewsPhoto1.png'),
-                        newsTitle: 'Emergency Covid19',
-                        newsContent: 'Lorem Ipsum ...',
-                        newsdate: 'Februari 01, 2021 06:30 WIB',
-                        newsDetails: 'Details',
-                        detailsIcon: require('../assets/images/arrow-next.png'),
-                    },
-                    {
-                        id: 'NewsContent4',
-                        newsPhoto: require('../assets/images/Test-BannerImageNews.png'),
-                        newsTitle: 'Emergency Covid19',
-                        newsContent: 'Lorem Ipsum ...',
-                        newsdate: 'Februari 01, 2021 06:30 WIB',
-                        newsDetails: 'Details',
-                        detailsIcon: require('../assets/images/arrow-next.png'),
-                    },
-                    {
-                        id: 'NewsContent5',
-                        newsPhoto: require('../assets/images/NewsPhoto1.png'),
-                        newsTitle: 'Emergency Covid19',
-                        newsContent: 'Lorem Ipsum ...',
-                        newsdate: 'Februari 01, 2021 06:30 WIB',
-                        newsDetails: 'Details',
-                        detailsIcon: require('../assets/images/arrow-next.png'),
-                    },
-                    {
-                        id: 'NewsContent6',
-                        newsPhoto: require('../assets/images/Test-BannerImageNews.png'),
-                        newsTitle: 'Emergency Covid19',
-                        newsContent: 'Lorem Ipsum ...',
-                        newsdate: 'Februari 01, 2021 06:30 WIB',
-                        newsDetails: 'Details',
-                        detailsIcon: require('../assets/images/arrow-next.png'),
-                    },
-                    
-                ]}
-                renderItem={({item}) =>
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate(item.id)}>
-                    <View style={styles.rectangleContent}>
-                        <Image style={{width: 90, height: 100, borderTopLeftRadius: 10, borderTopRightRadius: 50, borderBottomLeftRadius: 10, borderBottomRightRadius: 50}} 
-                        source={item.newsPhoto} />
-                        <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 99, top: -85, marginBottom: 2}}> {item.newsTitle} </Text>
-                        <Text style={{fontSize: 10, fontFamily: 'Poppins-Medium', left: 99, top: -85, marginBottom: 16}}> {item.newsContent} </Text>
-                        <Text style={{fontSize: 10, fontFamily: 'Poppins-Light', left: 99, top: -90, }}> {item.newsdate} </Text>
-                        <Text style={styles.newsDetail}> {item.newsDetails} </Text>
-                        <Image style={{width: 11, height: 11, left: 285, top: -122 }} 
-                        source={item.detailsIcon} />
-                    </View>
-                </TouchableWithoutFeedback>
-                }
-            />
-            </View>
-        );
+            );
+        }
     }
 }
 
@@ -130,7 +124,7 @@ const styles = StyleSheet.create({
         color: '#262734',
     },
     rectangleContent:{
-        margin: 5,
+        marginTop: 10,
         width: 310,
         height: 100,
         elevation: 0.7,
@@ -187,38 +181,37 @@ const styles = StyleSheet.create({
         left: 285, 
         top: -122 
     },
-    textMenuActivity:{      
+    textMenuNews: {     
+        bottom: 1.5,
+        textAlign: 'center',
         fontFamily: 'Poppins-Bold',
         fontSize: 14,
         lineHeight: 21,
-        color: '#f9f9fb',
-        textAlign: 'center',
+        color: '#fff'
     },
-    textMenuHome:{
-        position: 'absolute',
-        left: 158,
-        top : 22,
+    textMenuHome: {   
+        top: 22,
+        textAlign: 'center',
         color: 'rgba(38, 39, 52, 0.4)',
         fontFamily: 'Poppins-Bold',
         fontSize: 14,
         lineHeight: 21
     },
-    textMenuNotification:{
+    textMenuNotification: {
         position: 'absolute',
-        left: 245,
+        left: 240,
         top: 22,      
         fontFamily: 'Poppins-Bold',
         fontSize: 14,
         lineHeight: 21,
         color: 'rgba(38, 39, 52, 0.4)'
     },
-    selectionMenuActivity:{
-        justifyContent: 'center',
+    selectionMenuNews:{
         position: 'absolute',
-        width: 70,
+        width: 56,
         height: 16,
-        left: 49,
-        top: 25,
+        left: 75,
+        top: 24,
         backgroundColor: '#099f84',
         borderRadius: 50,
     },

@@ -47,7 +47,7 @@ export default class LoginScreen extends Component{
             this.setState({isSubmitting: false})
         }
         else {
-            axios.post('http://6daa09deffa7.ngrok.io/api/login-ceo',
+            axios.post('http://42bbbe79c5e3.ngrok.io/api/login-ceo',
             {
                 email: this.state.email,
                 password: this.state.password,

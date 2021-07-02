@@ -3,10 +3,8 @@ import {
     View,
     Text,
     Image,
-    TouchableOpacity,
     StyleSheet,
     TouchableWithoutFeedback,
-    ScrollView,
     FlatList,
 } from 'react-native';
 
@@ -24,12 +22,16 @@ export default class NewsContent1Screen extends Component{
                     </View>
                 </TouchableWithoutFeedback>               
                 {/* Title Text */}
-                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('News')}>Details News</Text>
+                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('News')}>News - {this.props.navigation.getParam('title')}</Text>
 
-                {/* News Tittle */}
-                <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, left: 25, top: 71}}>Emergency Covid19</Text>
-
-                <FlatList
+                {/* News Title */}
+                <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, left: 25, top: 71}}>{this.props.navigation.getParam('title')}</Text>
+                <Image 
+                    style={{alignSelf: 'center', width: 310, height: 100, top: 100, borderTopLeftRadius: 10, borderTopRightRadius: 10}}
+                    source={{uri: this.props.navigation.getParam('photo')}}
+                />
+                <Text style={{left: 25, maxWidth: 310, top: 200, fontFamily: 'Poppins-Medium', color: '#262734', fontSize: 12}}>{this.props.navigation.getParam('content')}</Text>
+                {/* <FlatList
                     style={{left: 25, top: 75}}
                     contentContainerStyle={{paddingBottom: 100,}}
                     data={[
@@ -53,18 +55,7 @@ export default class NewsContent1Screen extends Component{
                         </View>
                     </TouchableWithoutFeedback>
                     }
-                />
-                
-                {/* <ScrollView style={{flex: 1}}>
-                    <View style={{width: 310, height: 1000, left: 25, top: 99, backgroundColor: 'brown', borderTopLeftRadius: 10, borderTopRightRadius: 10,}}>
-                        
-                        <View style={{width: 310, height:157, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: 'blue'}}>
-                            <Text style={{fontSize: 30, fontFamily: 'Poppins-Bold', textAlign: 'center'}}>INI GAMBAR BERITANYA</Text>
-                        </View>
-
-                        <Text>INI ISI BERITANYA</Text>
-                    </View>
-                </ScrollView> */}
+                /> */}
             </View>
         );
     }

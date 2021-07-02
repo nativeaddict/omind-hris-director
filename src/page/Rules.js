@@ -6,7 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 import {Accordion} from 'native-base';
-
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const dataArray = [
     { title: "Regulations to fellow employees ", content: "Respect and appreciate to other employee" },
@@ -56,6 +56,20 @@ export default class RulesScreen extends Component{
     render(){
         return(
             <View style={styles.container}>
+                {/* <SkeletonPlaceholder>
+                    <View style={{flexDirection: 'column'}}>
+                        <View style={{left: 25, marginTop: 76, width: 310, height: 70, borderRadius: 10}}/>
+                        <View style={{flexDirection: 'row', marginTop: 20}}>
+                            <View style={{left: 25, width: 90, height: 90, borderRadius: 10}}/>
+                            <View style={{left: 45, width: 90, height: 90, borderRadius: 10}}/>
+                            <View style={{left: 65, width: 90, height: 90, borderRadius: 10}}/>
+                        </View>   
+                        <View style={{left: 25, marginTop: 20, width: 310, height: 30, borderRadius: 10}}/>
+                        <View style={{left: 25, marginTop: 10, width: 310, height: 30, borderRadius: 10}}/>
+                        <View style={{left: 25, marginTop: 10, width: 310, height: 30, borderRadius: 10}}/>
+                        <View style={{left: 25, marginTop: 10, width: 310, height: 30, borderRadius: 10}}/>
+                    </View>
+                </SkeletonPlaceholder>  */}
                  {/* Navbar */}
                  <View style={styles.rectangleBack}>
                     <Image
@@ -65,11 +79,11 @@ export default class RulesScreen extends Component{
                 </View>
                 <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Rules</Text>
                 
-                <Text style={{left: 25, top: 68, fontFamily: 'Poppins-Bold', fontSize: 16, position: 'absolute'}}> OmindTech Rules </Text>
+                {/* <Text style={{left: 25, top: 68, fontFamily: 'Poppins-Bold', fontSize: 16, position: 'absolute'}}> OmindTech Rules </Text> */}
 
-                <View style={{top: 96, left:25, width: 310, borderRadius: 10, backfaceVisibility: 'hidden', position: 'absolute'}}>
+                {/* <View style={{top: 96, left:25, width: 310, borderRadius: 10, backfaceVisibility: 'hidden', position: 'absolute'}}>
                     <Accordion renderHeader={this._renderHeader} renderContent={this._renderContent} dataArray={dataArray} expanded={[0]}/>
-                </View> 
+                </View>  */}
             </View>
         );
     }
@@ -77,8 +91,7 @@ export default class RulesScreen extends Component{
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center'
+        backgroundColor: '#f9f9fb',
     },
     rectangleBack:{
         position: 'absolute',

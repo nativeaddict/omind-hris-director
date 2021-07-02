@@ -1,66 +1,99 @@
 import React, { Component } from 'react';
-import {View,
-        Text,
-        StyleSheet,
-        Image,
-        TouchableOpacity,
-        TouchableWithoutFeedback,} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    FlatList,
+    Image,
+    TouchableWithoutFeedback,
+} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import SkeletonProjectStatus from '../components/SkeletonProjectStatus';
 
 export default class ProjectStatusScreen extends Component{
+    constructor(props){
+        super(props)
+        this.state = { 
+            project: [],
+            isLoading: false,
+        };
+    }
+    componentDidMount(){
+        this.getProject();
+    }
+    getProject = async()=>{
+        this.setState({isLoading: true})
+        let token = await AsyncStorage.getItem('token');
+        axios.get('http://42bbbe79c5e3.ngrok.io/api/project-all',{
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res=> {
+            res = res.data;
+            let temp_data = [];
+            temp_data = res.data.map(v => {
+                return{
+                    id: v.id,
+                    client: v.nama_mitra,
+                    name: v.nama_project,
+                    type: v.jenis_project,
+                    duedate: v.akhir_pengerjaan,
+                }
+            })
+            console.log('temp_data', temp_data);
+            this.setState({
+                project: temp_data,
+                isLoading: false,
+            })
+        })  
+        .catch(error => {
+            console.log(error.response.data);
+            this.setState({
+                error,
+                isLoading: false
+            })
+        });
+    }
     render(){
-        return(
-            <View style={styles.container}>
-                {/* Navbar */}
-                <View style={styles.rectangleBack}>
-                    <Image
-                        style={{width: 17, height: 17, position: 'absolute'}}
-                        source={require('../assets/images/arrow-back.png')}
-                    />                    
-                </View>               
-                {/* Title Text */}
-                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Project Status</Text>
-
-                {/* RectangleContent */}
-                <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('DetailProject')}>
-                    <View style={styles.RectangleContent}>
-                        <View style={styles.RectangleCompany}>
-                            <Text style={styles.companyName}>PT Infantry Sejahtera</Text>
-                        </View>
-                        <Text style={styles.titleText}>Infantry Mobile Apps</Text>
-                        <View style={styles.complementText}>
-                            <Text style={styles.Duedate}>Due date May 2021</Text>
-                            <Text style={styles.textDetails}>Details</Text>
-                            <Image source={require('../assets/images/arrow-next.png')}
-                                style={styles.arrowStyle} />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-                <View style={styles.RectangleContent}>
-                    <View style={styles.RectangleCompany}>
-                        <Text style={styles.companyName}>PT Sentosa 47</Text>
-                    </View>
-                    <Text style={styles.titleText}>Infantry Mobile Apps</Text>
-                    <View style={styles.complementText}>
-                        <Text style={styles.Duedate}>Due date May 2021</Text>
-                        <Text style={styles.textDetails}>Details</Text>
-                        <Image source={require('../assets/images/arrow-next.png')}
-                               style={styles.arrowStyle} />
-                    </View>
+        if(this.state.isLoading){
+            return<SkeletonProjectStatus/>
+        }
+        else{
+            return(
+                <View style={styles.container}>
+                    {/* Navbar */}
+                    <View style={styles.rectangleBack}>
+                        <Image
+                            style={{width: 17, height: 17, position: 'absolute'}}
+                            source={require('../assets/images/arrow-back.png')}
+                        />                    
+                    </View>               
+                    {/* Title Text */}
+                    <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Project Status</Text>
+                    {/* List Project */}
+                    <FlatList
+                        style={{top: 76, left: 25}}
+                        contentContainerStyle={{paddingBottom: 95}}
+                        showsVerticalScrollIndicator={false}
+                        data={this.state.project}
+                        renderItem={({item}) =>
+                            <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('DetailProject', item)}>
+                                <View style={styles.RectangleContent}>
+                                    <View style={styles.RectangleCompany}>
+                                        <Text style={{marginLeft: 3, fontFamily:'Poppins-Bold', fontSize: 12, color: '#fff'}}>{item.client}</Text>
+                                    </View>
+                                    <Text style={{marginLeft: 15, marginTop: 3, color: '#262734', fontSize: 18, fontFamily: 'Poppins-Medium'}}>{item.name}</Text>
+                                    <Text style={{marginLeft: 15, marginTop: -5, fontFamily: 'Poppins-Regular', color: '#262734', fontSize: 10}}>Due date {item.duedate}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                    />
                 </View>
-                <View style={styles.RectangleContent}>
-                    <View style={styles.RectangleCompany}>
-                        <Text style={styles.companyName}>PT Aman Jaya</Text>
-                    </View>
-                    <Text style={styles.titleText}>Infantry Mobile Apps</Text>
-                    <View style={styles.complementText}>
-                        <Text style={styles.Duedate}>Due date May 2021</Text>
-                        <Text style={styles.textDetails}>Details</Text>
-                        <Image source={require('../assets/images/arrow-next.png')}
-                               style={styles.arrowStyle} />
-                    </View>
-                </View>
-            </View>
-        );
+            );
+        }
     }
 }
 
@@ -93,9 +126,7 @@ const styles = StyleSheet.create({
         height: 70, 
         borderRadius: 10, 
         backgroundColor: '#FFF', 
-        elevation: 3, 
-        left: 25, 
-        top: 76, 
+        elevation: 0.7, 
         marginBottom: 10
     },
     companyName:{
@@ -104,10 +135,11 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     RectangleCompany:{
-        width: 95, 
+        alignContent: 'center',
+        width: 150, 
         height: 17, 
-        top: 9, 
-        left: 14, 
+        top: 10, 
+        marginLeft: 15, 
         backgroundColor: '#099F80', 
         borderRadius: 5, 
         marginBottom: 7

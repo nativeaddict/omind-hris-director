@@ -25,7 +25,7 @@ export default class EmployeeSummaryScreen extends Component{
     getEmployee = async()=>{
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://6daa09deffa7.ngrok.io/api/employee-sum',{
+        axios.get('http://42bbbe79c5e3.ngrok.io/api/employee-sum',{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -45,7 +45,6 @@ export default class EmployeeSummaryScreen extends Component{
                     dateofbirth: v.tgl_lahir,
                     socialmedia: v.instagram,
                     division: v.divisi.posisi,
-
                 }
             })
             console.log('employee', temp_data);
