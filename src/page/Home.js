@@ -17,18 +17,19 @@ export default class HomeScreen extends Component{
         super(props);
         this.state = {
             users: [],
+            meeting: [], 
             isLoading: false,
-            timePassed: false,
             error: null 
         }
     }
     componentDidMount(){
         this.getUser();
+        this.getMeeting();
     }
     getUser = async () => {
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://42bbbe79c5e3.ngrok.io/api/profile-ceo', {
+        axios.get('http://47d5c6f6b873.ngrok.io/api/profile-ceo', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -37,7 +38,6 @@ export default class HomeScreen extends Component{
         })
         .then(res=>{
             res = res.data;
-            console.log(res);
             this.setState({
                 users: res.data,
                 isLoading: false
@@ -49,9 +49,37 @@ export default class HomeScreen extends Component{
                 isLoading: false
         }))
     }
-    // getMeeting = async()=> {
-
-    // }
+    getMeeting = async()=> {
+        this.setState({isLoading: true})
+        let token = await AsyncStorage.getItem('token');
+        axios.get('http://47d5c6f6b873.ngrok.io/api/agenda-ceo', {
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res=>{
+            res = res.data;
+            let temp_data = [];
+            temp_data = res.data.map(v => {
+                return{
+                    name: v.jenis_agenda,
+                    description: v.judul_agenda,
+                    timestamp: v.tgl_agenda,
+                }
+            })
+            this.setState({
+                meeting: temp_data,
+                isLoading: false
+            });
+        })
+        .catch(error => 
+            this.setState({
+                error,
+                isLoading: false
+        }))
+    }
     render(){ 
         if(this.state.isLoading){
             return<SkeletonHome/>
@@ -97,27 +125,16 @@ export default class HomeScreen extends Component{
                     </TouchableWithoutFeedback>
                     {/* Meeting */}
                     <Text style={styles.textMeetingHeading}>Meeting</Text>
+                    {/* Flatlist Meeting */}
                     <FlatList
                         style={{left: 25, top: 269, maxHeight: 112}}
                         contentContainerStyle={{paddingRight: 40}}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        data={[
-                            {
-                                id: 'Review',                             
-                                name: 'Sprint Review',
-                                description: 'Weekly Review',                            
-                                timestamp: '3:40 PM Friday, February 20, 2021'                        
-                            },
-                            {
-                                id: 'Retrospective',                             
-                                name: 'Sprint Retrospective',
-                                description: 'Weekly Retrospective',
-                                timestamp: '4:40 PM Friday, February 20, 2021'
-                            },
-                        ]}                    
+                        data={this.state.meeting}           
+                        keyExtractor={(item, index) => index.toString()}              
                         renderItem={({item}) =>  
-                        <View style={[styles.rectangleMeetingCard]}>      
+                        <View style={styles.rectangleMeetingCard}>      
                             <Image 
                                 style={{right: 6, width: 106, height: 100, opacity: 1}}
                                 source={require('../assets/images/V_Meeting.png')}
@@ -134,6 +151,24 @@ export default class HomeScreen extends Component{
                         </View>
                         }   
                     />
+
+                    {/* View Meeting */}
+                    {/* <View style={styles.rectangleMeetingCard}>
+                        <Image 
+                            style={{right: 6, width: 106, height: 100, opacity: 1}}
+                            source={require('../assets/images/V_Meeting.png')}
+                        />
+                        <Text style={{left: 110, bottom: 90, fontFamily: 'Poppins-Bold', fontSize: 16, color: '#262734'}}>
+                            {this.state.meeting.jenis_agenda}
+                        </Text>
+                        <Text style={{left: 110, bottom: 90, fontFamily: 'Poppins-Medium', fontSize: 14}}>
+                            {this.state.meeting.judul_agenda}
+                        </Text>                               
+                        <Text style={{left: 110, bottom: 80, fontFamily: 'Poppins-Light', fontSize: 10}}>
+                            {this.state.meeting.tgl_agenda}
+                        </Text>
+                    </View> */}
+
                     {/* Guideline */}
                     <Text style={styles.textGuidelineHeading}>Guideline</Text>   
                     <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('FAQ')}>
@@ -257,6 +292,11 @@ const styles = StyleSheet.create({
         color: '#262734'
     },
     rectangleMeetingCard:{
+        // Delete this if use flatlist: 
+        // position: 'absolute',
+        // top: 269, 
+        // left: 25,
+        // ----------------------------
         marginRight: 10,
         width: 310,
         height: 100,

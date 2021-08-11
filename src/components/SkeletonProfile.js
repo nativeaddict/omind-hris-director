@@ -7,16 +7,20 @@ import {
 } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-export default class SkeletonProjectStatus extends Component{
+export default class SkeletonProfiile extends Component{
     
     render(){
         return(                        
             <View style={styles.container}>
                 <SkeletonPlaceholder>
                     <View style={{flexDirection: 'column'}}>
-                        <View style={{left: 25, marginTop: 76, width: 310, height: 70, borderRadius: 10}}/>
-                        <View style={{left: 25, marginTop: 10, width: 310, height: 70, borderRadius: 10}}/>       
-                        <View style={{left: 25, marginTop: 10, width: 310, height: 70, borderRadius: 10}}/>                                
+                        <View style={{left: 25, marginTop: 75, width: 310, height: 105, borderRadius: 10}}/>  
+                        <View style={{left: 25, marginTop: 40, width: 310, height: 30, borderRadius: 5}}/>
+                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
+                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
+                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
+                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
+                        <View style={{alignSelf: 'center', marginTop: 20, width: 170, height: 25, borderRadius: 5}}/>
                     </View>
                 </SkeletonPlaceholder> 
                  {/* Navbar */}
@@ -26,7 +30,7 @@ export default class SkeletonProjectStatus extends Component{
                         source={require('../assets/images/arrow-back.png')}
                     />                    
                 </View>
-                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Project Status</Text>                
+                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Profile</Text>                
             </View>
         );
     }

@@ -25,9 +25,8 @@ export default class AttendanceRecapScreen extends Component{
     }
     getEmployeePresenceHistory = async() => {
         let id = this.props.navigation.state.params.id;
-        console.log('id', id);
         let token = await AsyncStorage.getItem('token');
-        axios.get(`http://42bbbe79c5e3.ngrok.io/api/attendance-recap/${id}`, {
+        axios.get(`http://47d5c6f6b873.ngrok.io/api/attendance-recap/${id}`, {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -45,14 +44,12 @@ export default class AttendanceRecapScreen extends Component{
                      v.status
                 ]
             });
-            console.log(temp_data);
             this.setState({
                 dataPresence: temp_data,
                 isLoading: false
             });
         })
         .catch(error => {
-            console.log(error.response.data);
             this.setState({
                 error,
                 isLoading: false

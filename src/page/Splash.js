@@ -7,10 +7,16 @@ import {
 // Install this library
 import AsyncStorage from '@react-native-community/async-storage';
 import LottieView from 'lottie-react-native';
+import OneSignal from 'react-native-onesignal';
 
 export default class SplashScreen extends Component{
     constructor(props){
         super();
+    }
+
+    componentDidMount(){
+        OneSignal.setLogLevel(6, 0);
+        OneSignal.setAppId("c9c53e9e-baa4-479d-ac74-31709974fb87");
     }
 
     render(){

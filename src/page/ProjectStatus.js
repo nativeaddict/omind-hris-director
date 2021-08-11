@@ -25,7 +25,7 @@ export default class ProjectStatusScreen extends Component{
     getProject = async()=>{
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://42bbbe79c5e3.ngrok.io/api/project-all',{
+        axios.get('http://47d5c6f6b873.ngrok.io/api/project-all',{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -43,7 +43,6 @@ export default class ProjectStatusScreen extends Component{
                     duedate: v.akhir_pengerjaan,
                 }
             })
-            console.log('temp_data', temp_data);
             this.setState({
                 project: temp_data,
                 isLoading: false,

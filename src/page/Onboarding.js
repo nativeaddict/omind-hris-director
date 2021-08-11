@@ -21,7 +21,7 @@ const Next = ({...props}) => (
 
 const Done = ({...props}) => (
     <TouchableOpacity {...props} style={styles.buttonNext}>
-        <Text style={styles.buttonNextText}>Next</Text>
+        <Text style={styles.buttonNextText}>Done</Text>
     </TouchableOpacity>
 );
 export default class OnboardingScreen extends Component{
@@ -141,21 +141,20 @@ const styles = StyleSheet.create({
         width: 57,
         height: 18,
         right: '15%',
-        backgroundColor: '#fbb03b',
         borderRadius: 10
     },
     buttonNextText:{
         textAlign: 'center',
-        fontFamily: 'Poppins-Black',
+        fontFamily: 'Poppins-Bold',
         fontSize: 12,
         lineHeight: 18,
-        color: '#262734'
+        color: '#fff'
     },
     skipText:{
         width: 57,
         height: 18,
         left: '15%',
-        fontFamily: 'Poppins-Black',
+        fontFamily: 'Poppins-Bold',
         fontSize: 12,
         lineHeight: 18,
         color: '#fff'

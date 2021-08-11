@@ -7,8 +7,10 @@ import {
     Image,
     TouchableOpacity,
     Alert
-} from 'react-native';
+} 
+from 'react-native';
 import axios from 'axios';
+import OneSignal from 'react-native-onesignal';
 // import gambar ke objek
 import bgimages from '../assets/images/V_Login.png';
 import deviceStorage from '../services/DeviceStorage';
@@ -40,23 +42,24 @@ export default class LoginScreen extends Component{
                 "Error!",
                 errors_msg,
                 [
-                    {text: 'OK', onPress:()=>console.log('OK PRESS')}
+                    {text: 'OK'}
                 ],
                 {cancelable:false}
             );
             this.setState({isSubmitting: false})
         }
         else {
-            axios.post('http://42bbbe79c5e3.ngrok.io/api/login-ceo',
+            axios.post('http://47d5c6f6b873.ngrok.io/api/login-ceo',
             {
                 email: this.state.email,
                 password: this.state.password,
             },
             ).then(res=>{
+                OneSignal.sendTag('user_id', ''+ res.data.data.id);
+                OneSignal.sendTag('all_users','true');
                 deviceStorage.saveItem("token", res.data.token)
                 this.props.navigation.navigate('Home')
                 this.setState({isSubmitting: false})
-                console.log(res);
             }, err=>{
                 this.setState({isSubmitting: false})
                 let e = err.response.data;
@@ -75,11 +78,10 @@ export default class LoginScreen extends Component{
                     "Error!",
                     errors_msg,
                     [
-                        {text: 'OK', onPress:()=>console.log('OK PRESS')}
+                        {text: 'OK'}
                     ],
                     {cancelable:false}
                 );
-                console.log(err);
             }
             )
         }
@@ -108,17 +110,18 @@ export default class LoginScreen extends Component{
                     </View>
                     <Text style={styles.textPass}>Password</Text>
                     <View style={styles.inputEmail}>
-                        <TextInput style={styles.inputText}
+                        <TextInput 
+                        style={styles.inputText}
                         placeholder="Password"
                         placeholderTextColor="#fff" 
-                        secureTextEntry={true}
                         onChangeText={(val)=>{this.setState({password: val})}}
+                        secureTextEntry={this.state.password.length === 0? false : true}
                         value={this.state.password}
                         ref={(input) => this.password = input}
                         />
                     </View>
                     <TouchableOpacity style={styles.buttonLogin} onPress={this.submit} disabled={this.state.isSubmitting} >
-                        <Text style={styles.textButton} > {this.state.isSubmitting?'Signing In':'Sign In'}</Text>
+                        <Text style={styles.textButton} > {this.state.isSubmitting?'Signing In...':'Sign In'}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
         marginBottom: 60
     },
     textTitle:{
-        fontFamily: 'Poppins-Black',
+        fontFamily: 'Poppins-Bold',
         fontSize: 12,
         marginTop: 30,
         marginBottom: 0,
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
 
     },
     textPass:{
-        fontFamily: 'Poppins-Black',
+        fontFamily: 'Poppins-Bold',
         fontSize: 12,
         marginBottom: 0,
         color: '#f2f2f2',
@@ -193,9 +196,9 @@ const styles = StyleSheet.create({
     },
     inputText:{
         height: 50,
-        color: 'white',
+        color: '#fff',
         alignItems: 'center',
-        fontFamily: 'Poppins-Light'
+        fontFamily: 'Poppins-Light',
     },
     inputEmail:{
         width: 229,
@@ -235,9 +238,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     textButton:{
-        fontFamily: 'Poppins-Black',
+        fontFamily: 'Poppins-Bold',
         fontSize: 13,
-        color: '#f2f2f2'
-
+        color: '#f2f2f2',
+        alignSelf: 'center'
     }
 })

@@ -6,18 +6,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
-import {Accordion} from 'native-base';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import AwesomeAlert from 'react-native-awesome-alerts';
-
-const dataArray = [
-    { title: "Regulations to fellow employees ", content: "Respect and appreciate to other employee" },
-    { title: "Entry time regulator", content: "Lorem ipsum dolor sit amet" },
-    { title: "Rules during the office", content: "Lorem ipsum dolor sit amet" },
-    { title: "Lorem ipsum dolor sir amet", content: "Lorem ipsum dolor sit amet" },
-    { title: "Lorem ipsum dolor sir amet", content: "Lorem ipsum dolor sit amet" },
-    { title: "Lorem ipsum dolor sir amet", content: "Lorem ipsum dolor sit amet" }
-];
 
 export default class RulesScreen extends Component{
     constructor(props){

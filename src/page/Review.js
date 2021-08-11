@@ -3,11 +3,19 @@ import {View,
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity,
-    TouchableWithoutFeedback,} from 'react-native';
+    FlatList,
+} from 'react-native';
 
 export default class ReviewScreen extends Component{
+    constructor(props){
+        super(props);
+        this.state = { 
+            isLoading: false,
+            reviewtask: this.props.navigation.state.params.review
+        }
+    }
     render(){
+        // console.log(this.state.reviewtask)
         return(
             <View style={styles.container}>
                 {/* Navbar */}
@@ -25,27 +33,33 @@ export default class ReviewScreen extends Component{
                     <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, left: 21, position: 'absolute'}}>Review Task</Text>
                 </View>
 
-                <View style={{width: 310, height: 70, left: 25, top: 110, position: 'absolute'}}>
-                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 12, top: 10, left: 14, position: 'absolute'}}>Production Team</Text>
-                    <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12, top: 28, left: 14, position: 'absolute'}}>Create UI/UX Design</Text>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, top: 50, left: 14, position: 'absolute'}}>Complete at Monday, April 27</Text>
-                    <View style={{width: 50, height: 13, top: 12, left: 250, backgroundColor: '#FBB03B', position: 'absolute', borderRadius: 2}}></View>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, color: '#FFF', left: 253, top: 10, position: 'absolute'}}>Warning</Text>
-                </View>
-                <View style={{width: 310, height: 70, left: 25, top: 190, position: 'absolute'}}>
-                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 12, top: 10, left: 14, position: 'absolute'}}>Production Team</Text>
-                    <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12, top: 28, left: 14, position: 'absolute'}}>Android API Integration</Text>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, top: 50, left: 14, position: 'absolute'}}>Complete at Monday, April 27</Text>
-                    <View style={{width: 50, height: 13, top: 12, left: 250, backgroundColor: '#FBB03B', position: 'absolute', borderRadius: 2}}></View>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, color: '#FFF', left: 253, top: 10, position: 'absolute'}}>Warning</Text>
-                </View>
-                <View style={{width: 310, height: 70, left: 25, top: 270, position: 'absolute'}}>
-                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 12, top: 10, left: 14, position: 'absolute'}}>Production Team</Text>
-                    <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12, top: 28, left: 14, position: 'absolute'}}>IOS API Integration</Text>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, top: 50, left: 14, position: 'absolute'}}>Complete at Monday, April 27</Text>
-                    <View style={{width: 50, height: 13, top: 12, left: 250, backgroundColor: '#054FFF', position: 'absolute', borderRadius: 2}}></View>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, color: '#FFF', left: 263, top: 10, position: 'absolute', textAlign: 'center'}}>Safe</Text>
-                </View>
+                <FlatList 
+                    style={{top: 120, left : 25,}}
+                    contentContainerStyle={{paddingBottom : 200}}                   
+                    data={this.state.reviewtask}
+                    keyExtractor = {(item, index) => index}
+                    renderItem = {({item}) => {
+                        // console.log('ITEM', item);
+                        return <> 
+                        <View style={{width: 310, height: 70, borderRadius : 10, marginBottom: 10, elevation : 1, backgroundColor: '#FFF'}}>
+                            <View style={{width: 50, height: 13, top: 12, left: 250, backgroundColor: '#f5f9fa', position: 'absolute', borderRadius: 3, alignItems : 'center', justifyContent: 'center'}}>
+                                <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, color: '#262734', position: 'absolute'}}>
+                                    {item.status}
+                                </Text>
+                            </View> 
+                            <Text style={{fontFamily: 'Poppins-Bold', fontSize: 12, top: 10, left: 14, position: 'absolute'}}>
+                                Production Division
+                            </Text>
+                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12, top: 28, left: 14, position: 'absolute'}}>
+                                {item.desc}
+                            </Text>
+                            <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10, top: 50, left: 14, position: 'absolute'}}>
+                                {item.duedate}
+                            </Text>
+                        </View>
+                        </>   
+                    }}
+                />
             </View>
         );
     }

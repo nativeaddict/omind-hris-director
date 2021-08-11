@@ -25,7 +25,7 @@ export default class EmployeeSummaryScreen extends Component{
     getEmployee = async()=>{
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://42bbbe79c5e3.ngrok.io/api/employee-sum',{
+        axios.get('http://47d5c6f6b873.ngrok.io/api/employee-sum',{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -47,14 +47,13 @@ export default class EmployeeSummaryScreen extends Component{
                     division: v.divisi.posisi,
                 }
             })
-            console.log('employee', temp_data);
             this.setState({
                 employee: temp_data,
                 isLoading: false,
             })
         })  
         .catch(error => {
-            console.log(error.response.data);
+            // console.log(error.response.data);
             this.setState({
                 error,
                 isLoading: false
@@ -136,6 +135,7 @@ const styles = StyleSheet.create({
     },
     rectangleEmployee:{
         marginBottom: 10, 
+        backgroundColor: '#fff',
         width: 310,
         height: 95,       
         borderRadius: 10, 

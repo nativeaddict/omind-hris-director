@@ -5,7 +5,9 @@ import {
     Image,
     StyleSheet,
     TouchableWithoutFeedback,
+    ScrollView,
     FlatList,
+    Dimensions,
 } from 'react-native';
 
 export default class NewsContent1Screen extends Component{
@@ -23,39 +25,16 @@ export default class NewsContent1Screen extends Component{
                 </TouchableWithoutFeedback>               
                 {/* Title Text */}
                 <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('News')}>News - {this.props.navigation.getParam('title')}</Text>
-
-                {/* News Title */}
-                <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, left: 25, top: 71}}>{this.props.navigation.getParam('title')}</Text>
-                <Image 
-                    style={{alignSelf: 'center', width: 310, height: 100, top: 100, borderTopLeftRadius: 10, borderTopRightRadius: 10}}
+                <Image
+                    style={{width: 310, height: 157, alignSelf: 'center', top: 71, borderTopRightRadius: 10, borderTopLeftRadius: 10, position: 'absolute' }}
                     source={{uri: this.props.navigation.getParam('photo')}}
                 />
-                <Text style={{left: 25, maxWidth: 310, top: 200, fontFamily: 'Poppins-Medium', color: '#262734', fontSize: 12}}>{this.props.navigation.getParam('content')}</Text>
-                {/* <FlatList
-                    style={{left: 25, top: 75}}
-                    contentContainerStyle={{paddingBottom: 100,}}
-                    data={[
-                        {
-                            id: 'NewsContent',
-                            newsPhoto: require('../assets/images/V_Login.png'),
-                            newsContent: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.',
-                            author: 'Penulis : Daru Marojahan'
-                        },
-                        
-                    ]}
-                    renderItem={({item}) =>
-                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('News')}>
-                        <View style={styles.rectangleContent}>
-                            <View>
-                                <Image style={{width: 310, height: 157, borderTopLeftRadius: 10, borderTopRightRadius: 10, marginBottom: 100}} 
-                                source={item.newsPhoto} />
-                            </View>
-                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 14, top: -85, marginBottom: 70, textAlign: 'justify'}}> {item.newsContent} </Text>
-                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 14, top: -85, textAlign: 'right'}}>{item.author}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    }
-                /> */}
+                <ScrollView style={{width: 310, height: Dimensions.get('window').height, backgroundColor:'#fff', alignSelf:'center', top: 228, paddingBottom: 500, elevation: 3}}>
+                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 16, top: 10, textAlign: 'center', marginBottom: 10}}>{this.props.navigation.getParam('title')}</Text>
+                    <Text style={{fontFamily: 'Poppins-Medium', fontSize: 10, textAlign: 'left', maxWidth: 260, top: 10, left: 25}}> Omindtech.id team - Omind News</Text>
+                    <Text style={{fontFamily: 'Poppins-Medium', fontSize: 10, textAlign: 'left', maxWidth: 260, top: 10, left: 25}}> {this.props.navigation.getParam('date')} </Text>
+                    <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12, textAlign: 'left', maxWidth: 260, top: 10, textAlign: 'justify', left: 25}}>  {"\n"}{this.props.navigation.getParam('content')} </Text>
+                </ScrollView>
             </View>
         );
     }

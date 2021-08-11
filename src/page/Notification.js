@@ -1,86 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     View,
     Text,
     StyleSheet,
     useWindowDimensions,
-    FlatList,
-    Image,
-} from 'react-native';
+} 
+from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import DetailNotificationsScreen from './DetailNotifications';
 
 const NotifRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#FFF', elevation: 0.7 }}> 
-        <FlatList
-                contentContainerStyle={{paddingBottom: 1,}}
-                data={[
-                    {
-                        id: 'Notif1',
-                        menuIcon: require('../assets/images/Icon_Mail.png'),
-                        notifname: 'Daily Scrum',
-                        status: 'Morning Meeting Routine',
-                        date: 'Sunday, February 10, 8:40 am',
-                    },
-                    {
-                        id: 'Notif2',
-                        menuIcon: require('../assets/images/Icon_Mail.png'),
-                        notifname: 'Daily Scrum',
-                        status: 'Morning Meeting Routine',
-                        date: 'Sunday, February 10, 8:40 am',
-                    },
-                    {
-                        id: 'Notif3',
-                        menuIcon: require('../assets/images/Icon_Mail.png'),
-                        notifname: 'Sprint Retrospective Meeting',
-                        status: 'Your Presence Success',
-                        date: 'Saturday, February 10, 8:40 am',
-                    },
-                    {
-                        id: 'Notif4',
-                        menuIcon: require('../assets/images/Icon_Mail.png'),
-                        notifname: 'Sprint Retrospective Meeting',
-                        status: 'Your Presence Success',
-                        date: 'Saturday, February 10, 8:40 am',
-                    },
-                    {
-                        id: 'Notif5',
-                        menuIcon: require('../assets/images/Icon_Mail.png'),
-                        notifname: 'Daily Scrum',
-                        status: 'Your Presence Success',
-                        date: 'Friday, February 10, 8:40 am',
-                    },
-                    {
-                        id: 'Notif6',
-                        menuIcon: require('../assets/images/Icon_Mail.png'),
-                        notifname: 'Sprint Retrospective Meeting',
-                        status: 'Your Presence Success',
-                        date: 'Saturday, February 10, 8:40 am',
-                    },
-                    
-                ]}
-                renderItem={({item}) =>
-                <View style={{flexDirection: 'row', width: 310, height: 59.5, backgroundColor: '#fff', borderBottomColor: '#262734', borderBottomWidth: 0.3,}}>
-                    <View style={{}}>
-                        <Image style={{width: 50, height: 50, left: 10, marginRight: 10}} 
-                        source={item.menuIcon} />
-                    </View>
-                    <View style={{flexDirection: 'column'}}>
-                        <Text style={{left: 16, fontFamily: 'Poppins-Bold', fontSize: 12, }}> {item.notifname} </Text>
-                        <Text style={{left: 16, fontFamily: 'Poppins-Medium', fontSize: 10}}> {item.status} </Text>
-                        <Text style={{left: 16, fontFamily: 'Poppins-Light', fontSize: 10}}> {item.date} </Text>
-                    </View>
-                </View>
-                }
-                />
-    </View>
+    <DetailNotificationsScreen/>
   );
   
 const renderTabBar = props => (
     <TabBar
       {...props} 
-      labelStyle={{fontFamily: 'Poppins-Bold', color: '#262734'}}   
+      labelStyle={{fontFamily: 'Poppins-Bold', fontSize: 12}}   
       indicatorStyle={{ backgroundColor: '#ffff', }}
-      style={{ backgroundColor: 'grey', marginTop: 20, justifyContent: 'center', elevation: 3, width: 310, borderTopLeftRadius: 20, borderTopRightRadius: 20, fontFamily: 'Poppins-Bold', fontSize: 12}}
+      style={{ backgroundColor: '#099f84', marginTop: 20, justifyContent: 'center', elevation: 3, width: 310, borderTopLeftRadius: 20, borderTopRightRadius: 20, fontFamily: 'Poppins-Bold', fontSize: 12}}
     />
   );
 

@@ -37,16 +37,13 @@ export default class DetailEmployeeScreen extends Component{
         };
     }
     componentDidMount(){
-        // console.log('this.props.navigation.state.params', this.props.navigation.state.params);
-        // console.log('foto', this.state.params.photo);
         this.getEmployeeKPI();
     }
     getEmployeeKPI = async()=>{
         this.setState({isLoading: true})
         let id = this.props.navigation.state.params.id;
-        console.log(id);
         let token = await AsyncStorage.getItem('token');
-        axios.get(`http://42bbbe79c5e3.ngrok.io/api/kpi-employee/${id}`,{
+        axios.get(`http://47d5c6f6b873.ngrok.io/api/kpi-employee/${id}`,{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -54,14 +51,12 @@ export default class DetailEmployeeScreen extends Component{
             }
         }).then(res=> {
             res = res.data;
-            console.log(res);
             this.setState({
                 kpi: res,
                 isLoading: false,
             })
         })  
         .catch(error => {
-            console.log(error.response.data);
             this.setState({
                 error,
                 isLoading: false
@@ -102,7 +97,6 @@ export default class DetailEmployeeScreen extends Component{
                             style={{marginTop: 15}}
                             data={this.state.params}
                             renderItem = {({item}) => {
-                                console.log('ITEM', item);
                                 return <>
                                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
                                         <View style={{flexDirection: 'row', marginLeft: 10, marginBottom: 5}}>
@@ -145,7 +139,7 @@ export default class DetailEmployeeScreen extends Component{
                     </View>
                     {/* Performance */}
                     <Text style={styles.textPerformanceHeading}>Performance</Text>
-                    <TouchableWithoutFeedback onPress={()=>Alert.alert('Individual Objective')}>
+                    <TouchableWithoutFeedback onPress={()=>Alert.alert(`${this.props.navigation.state.params.name}`, `KPI Score: ${this.state.kpi.kpi}`)}>
                         <View style={styles.rectanglePerformance}>
                             <Text style={{alignSelf:'center', left: 25, fontFamily: 'Poppins-Medium', fontSize: 14, color: '#c4c4c4'}}>Final KPI Score</Text>
                             <Text style={{alignSelf: 'center', left: 130, fontFamily: 'Poppins-Bold', fontSize: 14, color: '#262734'}}>{this.state.kpi.kpi}</Text>

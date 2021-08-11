@@ -25,14 +25,13 @@ export default class DetailProjectScreen extends Component{
     }
     componentDidMount(){
         this.getDetail();
-        this.getPending();
+        this.getProgress();
     }
     getDetail = async () =>{ 
         this.setState({isLoading: true})
         let id = this.props.navigation.state.params.id
-        console.log(id);
         let token = await AsyncStorage.getItem('token')
-        axios.get(`http://42bbbe79c5e3.ngrok.io/api/detail-project/${id}`,{
+        axios.get(`http://47d5c6f6b873.ngrok.io/api/detail-project/${id}`,{
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -41,25 +40,23 @@ export default class DetailProjectScreen extends Component{
         })
         .then(res=> {
             res = res.data;
-            console.log(res);
             this.setState({
                 detail: res,
                 isLoading: false,
             })
         })  
         .catch(error => {
-            console.log(error.response.data);
             this.setState({
                 error,
                 isLoading: false
             })
         });
     }
-    getPending = async () => {
+    getProgress = async () => {
         this.setState({isLoading: true})
         let id = this.props.navigation.state.params.id
         let token = await AsyncStorage.getItem('token')
-        axios.get(`http://42bbbe79c5e3.ngrok.io/api/status-Task-Ceo/${id}`, {
+        axios.get(`http://47d5c6f6b873.ngrok.io/api/status-Task-Ceo/${id}`, {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -68,9 +65,41 @@ export default class DetailProjectScreen extends Component{
         })
         .then(res=> {
             res = res.data;
-            console.log('status task', res);
-            let temp_data = [];
-            temp_data = res.data.filter(v=> v.status_progres === 'Pending')
+            let temp_pending = [];
+            temp_pending = res.data.filter(v=> v.status_progres === 'Pending')
+            .map(
+                v=> {
+                    return{
+                        desc: v.deskripsi,
+                        status: v.status,
+                        duedate: v.deadline,
+                    }
+                }
+            )
+            let temp_ongoing = [];
+            temp_ongoing = res.data.filter(v=> v.status_progres === 'Ongoing')
+            .map(
+                v=> {
+                    return{
+                        desc: v.deskripsi,
+                        status: v.status,
+                        duedate: v.deadline,
+                    }
+                }
+            )
+            let temp_review = [];
+            temp_review = res.data.filter(v=> v.status_progres === 'Review')
+            .map(
+                v=> {
+                    return{
+                        desc: v.deskripsi,
+                        status: v.status,
+                        duedate: v.deadline,
+                    }
+                }
+            )
+            let temp_completed = [];
+            temp_completed = res.data.filter(v=> v.status_progres === 'Completed')
             .map(
                 v=> {
                     return{
@@ -81,13 +110,18 @@ export default class DetailProjectScreen extends Component{
                 }
             )
             this.setState({
-                pending: temp_data,
+                pending: temp_pending,
+                ongoing: temp_ongoing,
+                review: temp_review,
+                completed: temp_completed,
                 isLoading: false,
             })
-            console.log('pending', this.state.pending)
+            // console.log('pending', this.state.pending)
+            // console.log('ongoing', this.state.ongoing)
+            // console.log('review', this.state.review)
+            // console.log('completed', this.state.completed)
         })  
         .catch(error => {
-            console.log(error.response.data);
             this.setState({
                 error,
                 isLoading: false
@@ -109,7 +143,7 @@ export default class DetailProjectScreen extends Component{
                         />                    
                     </View>               
                     {/* Title Text */}
-                    <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Detail Project</Text>
+                    <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('ProjectStatus')}>Detail Project</Text>
                     
                     {/* Company Rectangle */}
                     <View style={{width: 310, height: 70, left: 25, top: 76, position: 'absolute', backgroundColor: '#FFF', elevation: 0.7, justifyContent: 'center', alignItems: 'center', borderRadius: 10, marginBottom: 20 }}>
@@ -140,7 +174,8 @@ export default class DetailProjectScreen extends Component{
 
                     {/* Status Rectangle */}
                     <View style={{width: 310, height: 150, left: 25, top: 276, position: 'absolute', backgroundColor: '#f9f9fb'}}>
-                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Pending')}>
+                        {/* Pending */}
+                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Pending', {pending: this.state.pending})}>
                             <View style={{width: 310, height: 30, backgroundColor: '#FFF', position: 'absolute', elevation: 0.7, borderRadius: 10}}> 
                                 <View style={{width: 10, height: 10, left: 11, top: 10, position :'absolute', backgroundColor: '#F15A25', borderRadius: 40}}></View>
                                 <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 34, top: 5, position: 'absolute'}}>Pending</Text>
@@ -150,7 +185,8 @@ export default class DetailProjectScreen extends Component{
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Ongoing')}>
+                        {/* Ongoing */}
+                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Ongoing', {ongoing: this.state.ongoing})}>
                             <View style={{width: 310, height: 30, backgroundColor: '#FFF', position: 'absolute', top: 40, elevation: 0.7, borderRadius: 10}}> 
                                 <View style={{width: 10, height: 10, left: 11, top: 10, position :'absolute', backgroundColor: '#FBB03B', borderRadius: 40}}></View>
                                 <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 34, top: 5, position: 'absolute'}}>Ongoing</Text>
@@ -160,7 +196,8 @@ export default class DetailProjectScreen extends Component{
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Review')}>
+                        {/* Review */}
+                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Review', {review: this.state.review})}>
                             <View style={{width: 310, height: 30, backgroundColor: '#FFF', position: 'absolute', top: 80, elevation: 0.7, borderRadius: 10}}> 
                                 <View style={{width: 10, height: 10, left: 11, top: 10, position :'absolute', backgroundColor: '#054FFF', borderRadius: 40}}></View>
                                 <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 34, top: 5, position: 'absolute'}}>Review</Text>
@@ -170,7 +207,8 @@ export default class DetailProjectScreen extends Component{
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Complete')}>
+                        {/* Completed */}
+                        <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Complete', {completed: this.state.completed})}>
                             <View style={{width: 310, height: 30, backgroundColor: '#FFF', position: 'absolute', top: 120, elevation: 0.7, borderRadius: 10}}> 
                                 <View style={{width: 10, height: 10, left: 11, top: 10, position :'absolute', backgroundColor: '#099F84', borderRadius: 40}}></View>
                                 <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 34, top: 5, position: 'absolute'}}>Complete</Text>

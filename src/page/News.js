@@ -25,7 +25,7 @@ export default class NewsScreen extends Component{
     getNews = async()=> {
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://42bbbe79c5e3.ngrok.io/api/get-news', {
+        axios.get('http://47d5c6f6b873.ngrok.io/api/get-news', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -44,14 +44,12 @@ export default class NewsScreen extends Component{
                     date: v.tgl_post
                 }
             });
-            console.log(temp_data);
             this.setState({
                 news: temp_data.reverse(),
                 isLoading: false,
             })
         })
         .catch(error => {
-            console.log(error.response.data);
             this.setState({
                 error,
                 isLoading: false
@@ -85,7 +83,7 @@ export default class NewsScreen extends Component{
                                 source={{uri: item.photo}} 
                             />   
                             <View style={{width: 90, height: 100, borderBottomEndRadius: 50, borderTopEndRadius: 50, borderTopStartRadius: 10, borderBottomStartRadius: 10, backgroundColor: 'rgba(9, 159, 132, 0.5)'}}/>
-                            <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, left: 99, top: -85, marginBottom: 2}}> {item.title} </Text>
+                            <Text style={{maxWidth: 200, maxHeight: 20, fontFamily: 'Poppins-Bold', fontSize: 14, left: 99, top: -85, marginBottom: 2}}> {item.title} </Text>
                             <Text style={{maxHeight: 15, maxWidth: 150, fontSize: 10, fontFamily: 'Poppins-Medium', left: 102, top: -85, marginBottom: 16}}>{item.content}</Text>
                             <Text style={{fontSize: 10, fontFamily: 'Poppins-Light', left: 99, top: -90, }}> {item.date} </Text>
                         </View>
@@ -124,6 +122,7 @@ const styles = StyleSheet.create({
         color: '#262734',
     },
     rectangleContent:{
+        backgroundColor: '#fff',
         marginTop: 10,
         width: 310,
         height: 100,
