@@ -9,12 +9,14 @@ import {
 import { Accordion } from 'native-base';
 
 const dataArray = [
-    { title: "Where i can see my salary?", content: "You can go to Home Screen, scroll to Payslip" },
-    { title: "How to use presence feature?", content: "Lorem ipsum dolor sit amet" },
-    { title: "How is the KPI calculation system?", content: "Lorem ipsum dolor sit amet" },
-    { title: "Can i change my salary?", content: "Lorem ipsum dolor sit amet" },
-    { title: "Does my salary is real?", content: "Lorem ipsum dolor sit amet" },
-    { title: "Can i change my biodata?", content: "Lorem ipsum dolor sit amet" }
+    { title: "Where i can see my salary?", content: "You can go to Home Screen, scroll to Payslip " },
+    { title: "How to use presence feature?", content: "You can go to Home Screen, click the presence menu" },
+    { title: "How is the KPI calculation system?", content: "KPI " },
+    { title: "Can i change my salary?", content: "No u can't, but you can tell to" },
+    { title: "Does my salary is real?", content: "Yes, of course it is!" },
+    { title: "Can i change my biodata?", content: "No, only admin or Human Resource can edit your biodata" },
+    { title: "How can i take my task?", content: "You can go to Project Screen to choose the project then you can take your task to next step" },
+    { title: "Where i can see my task report?", content: "You can go to Target Screen, that screen contain your summary your task in a month" },
   ];
 export default class FAQScreen extends Component{
     _renderHeader(item, expanded) {

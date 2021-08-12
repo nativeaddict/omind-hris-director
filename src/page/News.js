@@ -25,7 +25,7 @@ export default class NewsScreen extends Component{
     getNews = async()=> {
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://47d5c6f6b873.ngrok.io/api/get-news', {
+        axios.get('http://hris.omindtech.id/api/get-news', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

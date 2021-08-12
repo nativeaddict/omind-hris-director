@@ -43,7 +43,7 @@ export default class DetailEmployeeScreen extends Component{
         this.setState({isLoading: true})
         let id = this.props.navigation.state.params.id;
         let token = await AsyncStorage.getItem('token');
-        axios.get(`http://47d5c6f6b873.ngrok.io/api/kpi-employee/${id}`,{
+        axios.get(`http://hris.omindtech.id/api/kpi-employee/${id}`,{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

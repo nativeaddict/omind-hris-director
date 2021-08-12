@@ -29,7 +29,7 @@ export default class HomeScreen extends Component{
     getUser = async () => {
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://47d5c6f6b873.ngrok.io/api/profile-ceo', {
+        axios.get('http://hris.omindtech.id/api/profile-ceo', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export default class HomeScreen extends Component{
     getMeeting = async()=> {
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://47d5c6f6b873.ngrok.io/api/agenda-ceo', {
+        axios.get('http://hris.omindtech.id/api/agenda-ceo', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

@@ -7,36 +7,20 @@ import {
     StyleSheet
 } from 'react-native';
 import {Accordion} from 'native-base';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import AwesomeAlert from 'react-native-awesome-alerts';
 
 const dataArray = [
-    { title: "Regulations to fellow employees ", content: "Respect and appreciate to other employee" },
-    { title: "Entry time regulator", content: "Lorem ipsum dolor sit amet" },
-    { title: "Rules during the office", content: "Lorem ipsum dolor sit amet" },
-    { title: "Lorem ipsum dolor sir amet", content: "Lorem ipsum dolor sit amet" },
-    { title: "Lorem ipsum dolor sir amet", content: "Lorem ipsum dolor sit amet" },
-    { title: "Lorem ipsum dolor sir amet", content: "Lorem ipsum dolor sit amet" }
-];
-
+    { title: "Work Hour", content: "Work admission time at this company starts at 9 O'clock am and finished at 6 O'clock pm in Monday until Friday"},
+    { title: "Payroll System", content: "Payroll system at this company uses Monthly Payroll" },
+    { title: "Reward for Employes", content: "The company will give reward to employees who have good performance every years" },
+    { title: "How to dress for work", content: "Dress rule in this company is to dress freely as long as polite" },
+    { title: "Presence in and out", content: "Employees must do clock in and clock out attendancece on time " },
+    { title: "Overtime Work", content: "The overtime work rule in this company is twelve days in a year" }
+  ];
 export default class RulesScreen extends Component{
     constructor(props){
         super(props);
-        this.state = { 
-            showAlert: false,
-        };
     };
-    showAlert = () => {
-        this.setState({
-            showAlert: true
-        });
-    };
-
-    hideAlert = () => {
-        this.setState({
-            showAlert: false
-        });
-    };
+   
     _renderHeader(item, expanded) {
         return (
             <View style={{
@@ -73,21 +57,8 @@ export default class RulesScreen extends Component{
         );
       }
     render(){
-        const {showAlert} = this.state;
         return(
             <View style={styles.container}>
-                {/* <SkeletonPlaceholder>
-                    <View style={{flexDirection: 'column'}}>
-                        <View style={{left: 25, marginTop: 75, width: 310, height: 105, borderRadius: 10}}/>  
-                        <View style={{left: 25, marginTop: 40, width: 310, height: 30, borderRadius: 5}}/>
-                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
-                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
-                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
-                        <View style={{left: 25, marginTop: 13, width: 310, height: 30, borderRadius: 5}}/>
-                        <View style={{alignSelf: 'center', marginTop: 13, width: 170, height: 25, borderRadius: 5}}/>
-                    </View>
-                </SkeletonPlaceholder>  */}
-                 {/* Navbar */}
                  <View style={styles.rectangleBack}>
                     <Image
                         style={{position: 'absolute', width: 17, height: 17}}
@@ -95,71 +66,13 @@ export default class RulesScreen extends Component{
                     />                    
                 </View>
                 <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Rules</Text>
-                {/* <Text>I'm AwesomeAlert</Text> */}
-                <TouchableOpacity onPress={() => {
-                    this.showAlert();
-                }}>
-                    <View style={styles.button}>
-                    <Text style={styles.text}>test alert</Text>
-                </View>
-                </TouchableOpacity>
-                <AwesomeAlert
-                    contentContainerStyle={{
-                        width: 310,
-                        height: 389,
-                        backgroundColor: '#099f84',
-                        // background: radial-gradient(100% 100% at 0% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
-                        // box-shadow: inset -5px -5px 250px rgba(255, 255, 255, 0.02);
-                        borderRadius: 10,
-                       
-                    }}
-                    messageStyle={{
-                        fontFamily: 'Poppins-Bold',
-                        fontSize: 12,
-                        color: '#fff',
-                    }}
-                    titleStyle={{
-                        fontFamily: 'Poppins-Black',
-                        fontSize: 36,
-                        alignItems: 'center',
-                        color: '#fff',
-                    }}
-                    customView={
-                        <View style={{width: 50, height: 50, borderRadius: 50, backgroundColor: '#bb000e'}}>
-                        </View>
-                    }
-                    confirmButtonStyle={{
-                        borderRadius: 30,
-                        width: 70,
-                        height: 30,
-                        alignItems: 'center',
-                    }}
-                    confirmButtonTextStyle={{
-                        fontFamily: 'Poppins-Bold',
-                        color: '#fff',
-                    }}
-                    show={showAlert}
-                    showProgress={true}
-                    title="January"
-                    message="I have a message for you!"
-                    closeOnTouchOutside={true}
-                    closeOnHardwareBackPress={false}
-                    showConfirmButton={true}
-                    cancelText="No, cancel"
-                    confirmText="Okay"
-                    confirmButtonColor="#f4997c"
-                    onCancelPressed={() => {
-                        this.hideAlert();
-                    }}
-                    onConfirmPressed={() => {
-                        this.hideAlert();
-                    }}
-                />
-                {/* <Text style={{left: 25, top: 68, fontFamily: 'Poppins-Bold', fontSize: 16, position: 'absolute'}}> OmindTech Rules </Text> */}
+               
+                
+                <Text style={{left: 25, top: 68, fontFamily: 'Poppins-Bold', fontSize: 16, position: 'absolute'}}> OmindTech Rules </Text>
 
-                {/* <View style={{top: 96, left:25, width: 310, borderRadius: 10, backfaceVisibility: 'hidden', position: 'absolute'}}>
+                <View style={{top: 96, left:25, width: 310, borderRadius: 10, backfaceVisibility: 'hidden', position: 'absolute'}}>
                     <Accordion renderHeader={this._renderHeader} renderContent={this._renderContent} dataArray={dataArray} expanded={[0]}/>
-                </View>  */}
+                </View> 
             </View>
         );
     }

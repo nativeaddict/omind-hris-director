@@ -25,7 +25,7 @@ export default class ProjectStatusScreen extends Component{
     getProject = async()=>{
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://47d5c6f6b873.ngrok.io/api/project-all',{
+        axios.get('http://hris.omindtech.id/api/project-all',{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

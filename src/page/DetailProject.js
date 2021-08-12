@@ -31,7 +31,7 @@ export default class DetailProjectScreen extends Component{
         this.setState({isLoading: true})
         let id = this.props.navigation.state.params.id
         let token = await AsyncStorage.getItem('token')
-        axios.get(`http://47d5c6f6b873.ngrok.io/api/detail-project/${id}`,{
+        axios.get(`http://hris.omindtech.id/api/detail-project/${id}`,{
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default class DetailProjectScreen extends Component{
         this.setState({isLoading: true})
         let id = this.props.navigation.state.params.id
         let token = await AsyncStorage.getItem('token')
-        axios.get(`http://47d5c6f6b873.ngrok.io/api/status-Task-Ceo/${id}`, {
+        axios.get(`http://hris.omindtech.id/api/status-Task-Ceo/${id}`, {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

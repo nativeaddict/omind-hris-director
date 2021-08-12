@@ -23,7 +23,7 @@ export default class DetailNotificationsScreen extends Component{
     }
     getNotif = async ()=> {
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://47d5c6f6b873.ngrok.io/api/get-Notif-ceo', {
+        axios.get('http://hris.omindtech.id/api/get-Notif-ceo', {
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

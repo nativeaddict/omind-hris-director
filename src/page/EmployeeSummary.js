@@ -25,7 +25,7 @@ export default class EmployeeSummaryScreen extends Component{
     getEmployee = async()=>{
         this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
-        axios.get('http://47d5c6f6b873.ngrok.io/api/employee-sum',{
+        axios.get('http://hris.omindtech.id/api/employee-sum',{
             headers:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
