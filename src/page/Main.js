@@ -13,6 +13,12 @@ import HomeScreen from './Home';
 import NewsScreen from './News';
 import NotificationScreen from './Notification';
 import ProfileScreen from './Profile';
+import DivisionScreen from './Division';
+import HRScreen from './HR';
+import ProductionScreen from './Production';
+import DevOpsScreen from './DevOps';
+import DesignScreen from './Design';
+import MarketingScreen from './Marketing';
 import EmployeeSummaryScreen from './EmployeeSummary';
 import DetailEmployeeScreen from './DetailEmployee';
 import AttendanceRecapScreen from './AttendanceRecap';
@@ -64,6 +70,12 @@ const MainNavigator = createStackNavigator({
     News: {screen: NewsScreen},
     Notification: {screen: NotificationScreen},
     Profile: {screen: ProfileScreen},
+    Division: {screen: DivisionScreen},
+    HR: {screen: HRScreen},
+    Production: {screen: ProductionScreen},
+    DevOps: {screen: DevOpsScreen},
+    Design: {screen: DesignScreen},
+    Marketing: {screen: MarketingScreen},
     EmployeeSummary: {screen: EmployeeSummaryScreen},
     DetailEmployee: {screen: DetailEmployeeScreen},
     AttendanceRecap: {screen: AttendanceRecapScreen},
@@ -92,6 +104,12 @@ const MainScreen = createStackNavigator({
     News: {screen: NewsScreen},
     Notification: {screen: NotificationScreen},
     Profile: {screen: ProfileScreen},
+    Division: {screen: DivisionScreen},
+    HR: {screen: HRScreen},
+    Production: {screen: ProductionScreen},
+    DevOps: {screen: DevOpsScreen},
+    Design: {screen: DesignScreen},
+    Marketing: {screen: MarketingScreen},
     EmployeeSummary: {screen: EmployeeSummaryScreen},
     DetailEmployee: {screen: DetailEmployeeScreen},
     AttendanceRecap: {screen: AttendanceRecapScreen},

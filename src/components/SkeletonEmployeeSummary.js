@@ -65,7 +65,7 @@ export default class SkeletonEmployeeSummary extends Component{
                         source={require('../assets/images/arrow-back.png')}
                     />                    
                 </View>
-                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Employee Summary</Text>                
+                <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Home')}>Division</Text>                
             </View>
         );
     }

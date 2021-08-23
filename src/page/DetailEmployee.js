@@ -71,7 +71,7 @@ export default class DetailEmployeeScreen extends Component{
             return(
                 <View style={styles.container}>
                     {/* Navbar */}
-                    <TouchableWithoutFeedback onPress={()=>{this.props.navigation.navigate('EmployeeSummary')}}>
+                    <TouchableWithoutFeedback onPress={()=>{this.props.navigation.navigate('Division')}}>
                         <View style={styles.rectangleBack}>
                             <Image
                                 style={{position: 'absolute', width: 17, height: 17}}
@@ -79,7 +79,7 @@ export default class DetailEmployeeScreen extends Component{
                             />
                         </View>
                     </TouchableWithoutFeedback>
-                    <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('EmployeeSummary')}>Employee Profile</Text>
+                    <Text style={styles.textNavigation} onPress={()=>this.props.navigation.navigate('Division')}>Employee Profile</Text>
                     {/* Profile */}
                     <View style={{top: 50, width: 75, height: 75, backgroundColor: '#fff', borderRadius: 50, alignSelf: 'center', elevation: 1.7, justifyContent: 'center'}}>                    
                         <Image 
@@ -116,11 +116,11 @@ export default class DetailEmployeeScreen extends Component{
                                             <Text style={{marginLeft: 20, fontFamily: 'Poppins-Regular', fontSize: 12}}>{item.Address}</Text>
                                         </View>
                                         <View style={{flexDirection: 'row', marginLeft: 10, marginBottom: 5}}>
-                                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12}}>Date of Birth{'\t'}</Text>
+                                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12}}>Birthday</Text>
                                             <Text style={{marginLeft: 20, fontFamily: 'Poppins-Regular', fontSize: 12}}>{item.Dateofbirth}</Text>
                                         </View>
                                         <View style={{flexDirection: 'row', marginLeft: 10, marginBottom: 5}}>
-                                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12}}>Social Media{'\t'}</Text>
+                                            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 12}}>Socmed</Text>
                                             <Text style={{marginLeft: 20, fontFamily: 'Poppins-Regular', fontSize: 12}}>{item.Socialmedia}</Text>
                                         </View>
                                     </View>

@@ -104,7 +104,7 @@ export default class HomeScreen extends Component{
                         />
                     </TouchableWithoutFeedback>    
                     {/* Emp. summary */}
-                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('EmployeeSummary')}>
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('Division')}>
                         <View style={styles.rectangleEmployeeSummary}>
                             <Image 
                                 style={{top: 10, left: 10, width: 65, height: 80}}
