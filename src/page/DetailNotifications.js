@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import moment from 'moment';
+import SkeletonNotif from '../components/SkeletonNotif';
 
 export default class DetailNotificationsScreen extends Component{ 
     constructor(props){
@@ -16,12 +18,18 @@ export default class DetailNotificationsScreen extends Component{
             notif: [],
             isLoading: false,
             error: null,
+            isFetching: false,
         }
     };
     componentDidMount(){
         this.getNotif();
     }
+    onRefresh(){
+        this.setState({isFething: true},()=>{this.getNotif();});
+    }
+
     getNotif = async ()=> {
+        this.setState({isLoading: true})
         let token = await AsyncStorage.getItem('token');
         axios.get('http://hris.omindtech.id/api/get-Notif-ceo', {
             headers:{
@@ -32,10 +40,21 @@ export default class DetailNotificationsScreen extends Component{
         })
         .then(res=> {
             res = res.data;
-            this.setState({
-                notif: res,
+            this.setState({isLoading:false});
+            this.setState({isFetching:false});
+            let temp_data = [];
+            temp_data = res.data.map(v=>{
+                return{
+                    title: v.title,
+                    deskripsi: v.description,
+                    date: v.created_at,
+                }
             })
-            console.log('notif state', this.state.notif)
+            this.setState({
+                notif: temp_data.reverse(),
+                isLoading: false,
+            });
+            console.log('notif', this.state.notif)
         })  
         .catch(error => this.setState({
             error,
@@ -43,71 +62,35 @@ export default class DetailNotificationsScreen extends Component{
         }))
     }
     render(){
-        return(
-            <View style={{ flex: 1, backgroundColor: '#FFF', elevation: 0.7 }}> 
-                <FlatList
-                        contentContainerStyle={{paddingBottom: 1,}}
-                        data={[
-                            {
-                                id: 'Notif1',
-                                menuIcon: require('../assets/images/Icon_Mail.png'),
-                                notifname: 'Sprint Retrospective',
-                                status: 'Sprint 4 Retrospective Meeting',
-                                date: 'Friday, July 16, 8:40 am',
-                            },
-                            {
-                                id: 'Notif2',
-                                menuIcon: require('../assets/images/Icon_Mail.png'),
-                                notifname: 'Sprint Review',
-                                status: 'Sprint 3 Review Meeting',
-                                date: 'Friday, July 16, 8:40 am',
-                            },
-                            {
-                                id: 'Notif3',
-                                menuIcon: require('../assets/images/Icon_Mail.png'),
-                                notifname: 'Sprint Planning',
-                                status: 'Sprint 3 Planning Meeting',
-                                date: 'Monday, June 28, 9:30 AM',
-                            },
-                            {
-                                id: 'Notif4',
-                                menuIcon: require('../assets/images/Icon_Mail.png'),
-                                notifname: 'Pitching PT Infantry Sejahtera',
-                                status: 'Status update for Infantry Mobile Apps',
-                                date: 'Tuesday, June 22, 1:00 PM',
-                            },
-                            {
-                                id: 'Notif5',
-                                menuIcon: require('../assets/images/Icon_Mail.png'),
-                                notifname: 'Sprint Retrospective',
-                                status: 'Sprint 2 Retrospective Meeting',
-                                date: 'Friday, June 11, 5:00 PM',
-                            },
-                            {
-                                id: 'Notif6',
-                                menuIcon: require('../assets/images/Icon_Mail.png'),
-                                notifname: 'Sprint Review',
-                                status: 'Sprint 2 Review Meeting',
-                                date: 'Friday, June 11, 4:00 PM',
-                            },
-                            
-                        ]}
-                        renderItem={({item}) =>
-                        <View style={{flexDirection: 'row', width: 310, height: 59.5, backgroundColor: '#fff', borderBottomColor: '#262734', borderBottomWidth: 0.3,}}>
-                            <View style={{}}>
-                                <Image style={{width: 50, height: 50, left: 10, marginRight: 10}} 
-                                source={item.menuIcon} />
+        if(this.state.isLoading){
+            return<SkeletonNotif/>
+        }
+        else{
+            return(
+                <View style={{ flex: 1, backgroundColor: '#FFF', elevation: 0.7 }}> 
+                    <FlatList
+                            contentContainerStyle={{paddingBottom: 1,}}
+                            onRefresh= {()=>this.onRefresh()}
+                            refreshing= {this.state.isFetching}
+                            data={this.state.notif}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({item}) =>
+                            <View style={{flexDirection: 'row', width: 310, height: 59.5, backgroundColor: '#fff', borderBottomColor: '#262734', borderBottomWidth: 0.3,}}>
+                                <View style={{}}>
+                                    <Image style={{width: 50, height: 50, left: 10, marginRight: 10}} 
+                                    source={require('../assets/images/Icon_Mail.png')} />
+                                </View>
+                                <View style={{flexDirection: 'column'}}>
+                                    <Text style={{left: 16, fontFamily: 'Poppins-Bold', fontSize: 12, }}> {item.title} </Text>
+                                    <Text style={{left: 16, fontFamily: 'Poppins-Medium', fontSize: 10}}> {item.deskripsi} </Text>
+                                    <Text style={{left: 16, fontFamily: 'Poppins-Light', fontSize: 10}}> {moment(item.date).format('LLLL')} </Text>
+                                </View>
                             </View>
-                            <View style={{flexDirection: 'column'}}>
-                                <Text style={{left: 16, fontFamily: 'Poppins-Bold', fontSize: 12, }}> {item.notifname} </Text>
-                                <Text style={{left: 16, fontFamily: 'Poppins-Medium', fontSize: 10}}> {item.status} </Text>
-                                <Text style={{left: 16, fontFamily: 'Poppins-Light', fontSize: 10}}> {item.date} </Text>
-                            </View>
-                        </View>
-                        }
-                        />
-            </View>
-        )
+                            }
+                            />
+                </View>
+            )
+        }
     }
 }
 const styles = StyleSheet.create({
